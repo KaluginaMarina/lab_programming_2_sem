@@ -1,0 +1,10 @@
+*.class
+*.jar
+*.xml
+server/out
+server/build
+server/gradle
+server/.idea
+server/.gradle
+server/gradlew
+server/gradlew.bat

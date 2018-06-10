@@ -1,0 +1,10 @@
+*.class
+*.jar
+*.xml
+client/out
+client/build
+client/gradle
+client/.idea
+client/.gradle
+client/gradlew
+client/gradlew.bat
