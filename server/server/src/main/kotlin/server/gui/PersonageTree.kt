@@ -1,6 +1,8 @@
 package server.gui
 
 import model.Personage
+import java.awt.event.MouseAdapter
+import java.awt.event.MouseEvent
 import java.util.concurrent.ConcurrentLinkedDeque
 import javax.swing.JTree
 import javax.swing.tree.DefaultMutableTreeNode
@@ -11,7 +13,7 @@ class PersonageTree(heroes : ConcurrentLinkedDeque<Personage>) : JTree(getTreeMo
     companion object {
         fun getTreeModel() : DefaultTreeModel{
             val shorties = DefaultMutableTreeNode("Коротышки")
-            val moonlighters = DefaultMutableTreeNode("Лунатик")
+            val moonlighters = DefaultMutableTreeNode("Лунатики")
             val readers = DefaultMutableTreeNode("Читатели")
             val personages = DefaultMutableTreeNode("Персонажи").apply {
                 add(shorties)
@@ -23,6 +25,23 @@ class PersonageTree(heroes : ConcurrentLinkedDeque<Personage>) : JTree(getTreeMo
     }
     init {
         refresh()
+        addMouseListener(object : MouseAdapter(){
+            override fun mousePressed(e: MouseEvent) {
+                if (e.clickCount != 2) return
+                val selPath = getPathForLocation(e.x, e.y)
+                if (selPath != null) {
+                    val selected = (selPath.getLastPathComponent() as DefaultMutableTreeNode).userObject
+                    when (selected) {
+                        is String -> {
+                            println(selected)
+                        }
+                        is Personage -> {
+                            println(selected)
+                        }
+                    }
+                }
+            }
+        })
     }
 
     fun refresh(){
@@ -40,4 +59,6 @@ class PersonageTree(heroes : ConcurrentLinkedDeque<Personage>) : JTree(getTreeMo
         }
         (model as DefaultTreeModel).reload()
     }
+
+
 }

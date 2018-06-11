@@ -1,8 +1,7 @@
 package server.gui
 
 import model.Personage
-import java.awt.GridBagConstraints
-import java.awt.GridBagLayout
+import java.awt.GridLayout
 import java.awt.Rectangle
 import java.util.concurrent.ConcurrentLinkedDeque
 import javax.swing.JFrame
@@ -12,7 +11,7 @@ class GUI(heroes : ConcurrentLinkedDeque<Personage>) : JFrame("SERVER"){
     var tree = PersonageTree(heroes)
 
     init {
-        bounds = Rectangle(400, 100, 500, 500)
+        bounds = Rectangle(400, 100, 550, 400)
         defaultCloseOperation = JFrame.EXIT_ON_CLOSE
         isResizable = false
 
@@ -21,12 +20,10 @@ class GUI(heroes : ConcurrentLinkedDeque<Personage>) : JFrame("SERVER"){
         jMenuBar = JMenuBar()
         jMenuBar.add(menuBar)
 
-        layout = GridBagLayout()
-        val c = GridBagConstraints()
-        c.gridx = 1
-        c.gridy = 0
-        this.add(tree, c)
+        layout = GridLayout(1, 2)
 
+        add(javax.swing.JScrollPane(tree))
+        add(PersonageChange())
         isVisible = true
     }
 }

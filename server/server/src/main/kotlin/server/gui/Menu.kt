@@ -11,13 +11,13 @@ class Menu(gui : GUI) : JMenu("Меню"){
             manage.Command.load()
             gui.tree.refresh()
         }
-        this.add(loadItem)
+        add(loadItem)
 
-        val saveItem = JMenuItem("Сохрпнить коллекцию в файл")
+        val saveItem = JMenuItem("Сохрaнить коллекцию в файл")
         saveItem.addActionListener{
             manage.Command.collectionSave()
         }
-        this.add(saveItem)
+        add(saveItem)
 
         val logoutItem = JMenuItem("Смена пользователя")
         logoutItem.addActionListener{
@@ -25,12 +25,12 @@ class Menu(gui : GUI) : JMenu("Меню"){
             AutorizationGUI()
             gui.dispose()
         }
-        this.add(logoutItem)
+        add(logoutItem)
 
         val closeItem = JMenuItem("Выход")
         closeItem.addActionListener{
             System.exit(0)
         }
-        this.add(closeItem)
+        add(closeItem)
     }
 }

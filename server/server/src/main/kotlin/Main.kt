@@ -1,11 +1,9 @@
 import authorization.AutorizationGUI
 import manage.Command
-import org.mindrot.jbcrypt.BCrypt
 import server.manage.Manage
 import server.Server
 
 import java.net.ServerSocket
-import java.security.MessageDigest
 import java.util.concurrent.Executors
 
 
@@ -22,7 +20,6 @@ fun main(args: Array<String>) {
     Runtime.getRuntime().addShutdownHook(Thread { Command.collectionSave() })
 
     var gui = AutorizationGUI()
-
     println("Сервер начал работу.")
     try {
         ServerSocket(8080).use { server ->
