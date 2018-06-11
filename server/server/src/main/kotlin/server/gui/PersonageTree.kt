@@ -6,26 +6,38 @@ import javax.swing.JTree
 import javax.swing.tree.DefaultMutableTreeNode
 import javax.swing.tree.DefaultTreeModel
 
-class PersonageTree(heroes : ConcurrentLinkedDeque<Personage>) : JTree(treeModel1) {
+class PersonageTree(heroes : ConcurrentLinkedDeque<Personage>) : JTree(getTreeModel()) {
 
     companion object {
-        val shorties = DefaultMutableTreeNode("Коротышки")
-        val moonlighters = DefaultMutableTreeNode("Лунатик")
-        val readers = DefaultMutableTreeNode("Читатели")
-        val personages = DefaultMutableTreeNode("Персонажи").apply {
-            add(shorties)
-            add(moonlighters)
-            add(readers)}
-        val treeModel1 = DefaultTreeModel(personages, true)
+        fun getTreeModel() : DefaultTreeModel{
+            val shorties = DefaultMutableTreeNode("Коротышки")
+            val moonlighters = DefaultMutableTreeNode("Лунатик")
+            val readers = DefaultMutableTreeNode("Читатели")
+            val personages = DefaultMutableTreeNode("Персонажи").apply {
+                add(shorties)
+                add(moonlighters)
+                add(readers)}
+            return DefaultTreeModel(personages, true)
+        }
+
     }
     init {
-        heroes.forEach{
+        refresh()
+    }
+
+    fun refresh(){
+        val root = (model.root as DefaultMutableTreeNode).children().toList()
+        (root[0] as DefaultMutableTreeNode).removeAllChildren()
+        (root[1] as DefaultMutableTreeNode).removeAllChildren()
+        (root[2] as DefaultMutableTreeNode).removeAllChildren()
+        manage.Command.heroes.forEach{
             when (it.type) {
-                "Коротышка" -> shorties.add(DefaultMutableTreeNode(it, false))
-                "Лунатик" -> moonlighters.add(DefaultMutableTreeNode(it, false))
-                "Читатель" -> readers.add(DefaultMutableTreeNode(it, false))
-                "Персонаж" -> readers.add(DefaultMutableTreeNode(it, false))
+                "Коротышка" -> (root[0] as DefaultMutableTreeNode).add(DefaultMutableTreeNode(it, false))
+                "Лунатик" -> (root[1] as DefaultMutableTreeNode).add(DefaultMutableTreeNode(it, false))
+                "Читатель" -> (root[2] as DefaultMutableTreeNode).add(DefaultMutableTreeNode(it, false))
+                "Персонаж" -> (model.root as DefaultMutableTreeNode).add(DefaultMutableTreeNode(it, false))
             }
         }
+        (model as DefaultTreeModel).reload()
     }
 }

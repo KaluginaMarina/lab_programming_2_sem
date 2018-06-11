@@ -2,10 +2,6 @@ import client.Client;
 import client.gui.ClientGUI;
 import model.*;
 
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import java.util.Properties;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 
