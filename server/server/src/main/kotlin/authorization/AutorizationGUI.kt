@@ -1,5 +1,6 @@
 package authorization
 
+import manage.Command
 import org.mindrot.jbcrypt.BCrypt
 import server.gui.GUI
 import java.awt.*
@@ -26,7 +27,7 @@ class AutorizationGUI : JFrame("Авторизация"){
             }
             if (check) {
                 this@AutorizationGUI.isVisible = false
-                GUI()
+                GUI(Command.heroes)
                 dispose()
             } else {
                 loginTextFiled.background = Color(255, 156, 140)
@@ -41,7 +42,6 @@ class AutorizationGUI : JFrame("Авторизация"){
         c.gridy = 0
         this.add(headLabel, c)
 
-        c.fill = GridBagConstraints.LINE_START
         c.gridy = 1
         this.add(loginTextFiled, c)
 

@@ -8,3 +8,4 @@ server/.idea
 server/.gradle
 server/gradlew
 server/gradlew.bat
+server/materials/logins.csv
