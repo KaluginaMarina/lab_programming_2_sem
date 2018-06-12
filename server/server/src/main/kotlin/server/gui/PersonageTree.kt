@@ -8,7 +8,7 @@ import javax.swing.JTree
 import javax.swing.tree.DefaultMutableTreeNode
 import javax.swing.tree.DefaultTreeModel
 
-class PersonageTree(heroes : ConcurrentLinkedDeque<Personage>) : JTree(getTreeModel()) {
+class PersonageTree(heroes : ConcurrentLinkedDeque<Personage>, guiPersonageChange: PersonageChange) : JTree(getTreeModel()) {
 
     companion object {
         fun getTreeModel() : DefaultTreeModel{
@@ -32,11 +32,25 @@ class PersonageTree(heroes : ConcurrentLinkedDeque<Personage>) : JTree(getTreeMo
                 if (selPath != null) {
                     val selected = (selPath.getLastPathComponent() as DefaultMutableTreeNode).userObject
                     when (selected) {
-                        is String -> {
-                            println(selected)
-                        }
                         is Personage -> {
-                            println(selected)
+                            guiPersonageChange.apply {
+                                when (selected.type) {
+                                    "Коротышка" -> shortiesRadioButton.isSelected = true
+                                    "Лунатик" -> moonlighterRadioButton.isSelected = true
+                                    "Читатель" -> readerRagioButton.isSelected = true
+                                }
+                                nameTextFiled.text = selected.name
+                                xPointSpinner.value = selected.x
+                                yPointSpinner.value = selected.y
+                                hightSpinner.value = selected.height
+                                forceSpinner.value = selected.force
+                                when (selected.mood.name) {
+                                    "HAPPY" -> happyMoodRadioButton.isSelected = true
+                                    "NORMAL" -> normalMoodRadioButton.isSelected = true
+                                    "SAD" -> sadMoodRadioButton.isSelected = true
+                                    "FURY" -> furyMoodRadioButton.isSelected = true
+                                }
+                            }
                         }
                     }
                 }

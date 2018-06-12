@@ -5,7 +5,7 @@ import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import javax.swing.*
 
-class PersonageChange : JComponent(){
+class PersonageChange(gui : GUI) : JComponent(){
     val shortiesRadioButton = JRadioButton("Коротышка")
     val moonlighterRadioButton = JRadioButton("Лунатик")
     val readerRagioButton = JRadioButton("Читатель")
@@ -21,6 +21,7 @@ class PersonageChange : JComponent(){
     val addButton = JButton("Добавить")
     val changeButton = JButton("Изменить")
     val removeButton = JButton("Удалить")
+    val personageTree = gui.tree
 
     init {
         layout = GridBagLayout()
