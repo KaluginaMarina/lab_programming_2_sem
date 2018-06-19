@@ -107,4 +107,13 @@ public class Command extends CollectionManage{
         heroes = heroes.stream().limit(heroes.size() - 1).collect(Collectors.toCollection(ConcurrentLinkedDeque::new));
         changeDate = new Date();
     }
+
+    public static boolean remove(Personage pers){
+        if (pers == null) {
+            return false;
+        };
+        heroes = heroes.stream().filter(x -> x.compareTo(pers) != 0).sorted().collect(Collectors.toCollection(ConcurrentLinkedDeque::new));
+        changeDate = new Date();
+        return true;
+    }
 }

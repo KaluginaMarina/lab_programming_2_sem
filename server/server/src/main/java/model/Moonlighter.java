@@ -21,7 +21,6 @@ public class Moonlighter extends Personage{
         this.force = 7;
         this.height = height;
         this.skillSwear = 10;
-        this.dateCreate = new Date();
 
     }
 

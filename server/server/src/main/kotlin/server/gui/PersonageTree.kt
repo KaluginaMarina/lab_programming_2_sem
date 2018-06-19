@@ -10,6 +10,8 @@ import javax.swing.tree.DefaultTreeModel
 
 class PersonageTree(heroes : ConcurrentLinkedDeque<Personage>, guiPersonageChange: PersonageChange) : JTree(getTreeModel()) {
 
+    var selectedPersonage: Personage?
+
     companion object {
         fun getTreeModel() : DefaultTreeModel{
             val shorties = DefaultMutableTreeNode("Коротышки")
@@ -25,6 +27,7 @@ class PersonageTree(heroes : ConcurrentLinkedDeque<Personage>, guiPersonageChang
     }
     init {
         refresh()
+        selectedPersonage = null
         addMouseListener(object : MouseAdapter(){
             override fun mousePressed(e: MouseEvent) {
                 if (e.clickCount != 2) return
@@ -51,6 +54,10 @@ class PersonageTree(heroes : ConcurrentLinkedDeque<Personage>, guiPersonageChang
                                     "FURY" -> furyMoodRadioButton.isSelected = true
                                 }
                             }
+                            selectedPersonage = selected
+                        }
+                        is String -> {
+                            selectedPersonage = null
                         }
                     }
                 }

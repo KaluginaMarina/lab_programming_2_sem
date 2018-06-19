@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public abstract class Personage implements Comparable<Personage>, Serializable{
@@ -12,7 +13,7 @@ public abstract class Personage implements Comparable<Personage>, Serializable{
     public int force;
     public int height;
     public Mood mood = Mood.NORMAL;
-    public Date dateCreate;
+    public LocalDateTime dateCreate;
 
     @Override
     public boolean equals(Object s) {
@@ -111,5 +112,9 @@ public abstract class Personage implements Comparable<Personage>, Serializable{
             }
         }
         return true;
+    }
+
+    public void setCreateDate(LocalDateTime date){
+        dateCreate = date;
     }
 }

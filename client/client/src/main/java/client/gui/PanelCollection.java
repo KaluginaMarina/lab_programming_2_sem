@@ -111,17 +111,21 @@ public class PanelCollection extends JPanel {
                     ellipses.get(j).filter = e.filter;
                 }
             }
-            for (int j = 0; j < ellipses.size(); ++j) {
-                Boolean check1 = false;
-                for (int k = 0; k < heroes.size(); ++k) {
-                    if (ellipses.get(j).personage.equals(heroesList.get(k))) {
-                        check1 = true;
-                        break;
+            try {
+                for (int j = 0; j < ellipses.size(); ++j) {
+                    Boolean check1 = false;
+                    for (int k = 0; k < heroes.size(); ++k) {
+                        if (ellipses.get(j).personage.equals(heroesList.get(k))) {
+                            check1 = true;
+                            break;
+                        }
+                    }
+                    if (!check1) {
+                        ellipses.remove(j);
                     }
                 }
-                if (!check1) {
-                    ellipses.remove(j);
-                }
+            } catch (IndexOutOfBoundsException ex){
+                System.out.println();
             }
         }
 

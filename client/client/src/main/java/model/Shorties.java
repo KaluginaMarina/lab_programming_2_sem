@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 public class Shorties extends Personage {
@@ -12,7 +13,6 @@ public class Shorties extends Personage {
         this.force = 5;
         this.height = height;
         this.skillSwear = 3;
-        this.dateCreate = new Date();
     }
 
     /**

@@ -9,7 +9,6 @@ public class Reader extends Personage {
        this.name = name;
        this.force = 0;
        this.height = 158;
-       this.dateCreate = new Date();
     }
 
 

@@ -36,7 +36,7 @@ public class Client implements Runnable{
      */
     @Override
     public void run() {
-        try (Socket socket = new Socket("localhost", 8080);
+        try (Socket socket = new Socket("localhost", 27525);
              //FileInputStream fis = new FileInputStream("materials/script.txt");
              //InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
              BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

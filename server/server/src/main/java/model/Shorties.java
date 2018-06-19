@@ -13,7 +13,6 @@ public class Shorties extends Personage {
         this.force = 5;
         this.height = height;
         this.skillSwear = 3;
-        this.dateCreate = new Date();
     }
 
     /**

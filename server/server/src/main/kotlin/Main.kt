@@ -20,9 +20,10 @@ fun main(args: Array<String>) {
     Runtime.getRuntime().addShutdownHook(Thread { Command.collectionSave() })
 
     var gui = AutorizationGUI()
+
     println("Сервер начал работу.")
     try {
-        ServerSocket(8080).use { server ->
+        ServerSocket(27525).use { server ->
             while (!server.isClosed) {
                 val client = server.accept()
                 executeIt.execute(Server(client))

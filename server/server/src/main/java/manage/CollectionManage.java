@@ -8,6 +8,8 @@ import org.json.simple.parser.JSONParser;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.stream.Collectors;
@@ -67,11 +69,16 @@ abstract class CollectionManage {
                 switch (type){
                     case "Читатель": {
                         Reader reader = new Reader(sc.next());
+                        reader.x = sc.nextDouble();
+                        reader.y = sc.nextDouble();
                         reader.height = sc.nextInt();
                         reader.force = sc.nextInt();
                         if (!reader.setMood(sc.next())){
                             throw new Exception();
                         }
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                        LocalDateTime dateTime = LocalDateTime.parse(sc.next().replace("T", " "), formatter);
+                        reader.dateCreate = dateTime;
                         heroes.add(reader);
                         break;
                     }
@@ -82,6 +89,9 @@ abstract class CollectionManage {
                         if (!moonlighter.setMood(sc.next())){
                             throw new Exception();
                         }
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                        LocalDateTime dateTime = LocalDateTime.parse(sc.next().replace("T", " "), formatter);
+                        moonlighter.dateCreate = dateTime;
                         heroes.add(moonlighter);
                         break;
                     }
@@ -92,6 +102,9 @@ abstract class CollectionManage {
                         if (!shorties.setMood(sc.next())){
                             throw new Exception();
                         }
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                        LocalDateTime dateTime = LocalDateTime.parse(sc.next().replace("T", " "), formatter);
+                        shorties.dateCreate = dateTime;
                         heroes.add(shorties);
                         break;
                     }
@@ -151,7 +164,7 @@ abstract class CollectionManage {
      */
     public static String toSCV(){
         return heroes.stream()
-                .map(x -> ((x.type.equals("Читатель")) ? x.type + "," + x.name + "," + x.height  + "," + x.force + "," + x.mood + "\n" : x.type + "," + x.name + "," + x.x + "," + x.y + "," + x.height + "," + x.skillSwear + "," + x.force + "," + x.mood + "\n"))
+                .map(x -> (x.type + "," + x.name + "," + x.x + "," + x.y + "," + x.height + "," + x.skillSwear + "," + x.force + "," + x.mood + "," + x.dateCreate.toString().replace("T", " ") +  "\n"))
                 .collect(Collectors.joining());
     }
 

@@ -1,5 +1,6 @@
 package server.gui
 
+import model.*
 import java.awt.Color
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
@@ -10,8 +11,8 @@ class PersonageChange(gui : GUI) : JComponent(){
     val moonlighterRadioButton = JRadioButton("Лунатик")
     val readerRagioButton = JRadioButton("Читатель")
     val nameTextFiled = JTextField(50)
-    val xPointSpinner = JSpinner()
-    val yPointSpinner = JSpinner()
+    val xPointSpinner = JSpinner(SpinnerNumberModel(0.0 as Double, -1000.0, 1000.0, 1.0))
+    val yPointSpinner = JSpinner(SpinnerNumberModel(0.0 as Double, -1000.0, 1000.0, 1.0))
     val hightSpinner = JSpinner(SpinnerNumberModel(0, 0, 300, 1))
     val forceSpinner = JSpinner(SpinnerNumberModel(0, 0, 100, 1))
     val normalMoodRadioButton = JRadioButton("Нормальное")
@@ -21,7 +22,6 @@ class PersonageChange(gui : GUI) : JComponent(){
     val addButton = JButton("Добавить")
     val changeButton = JButton("Изменить")
     val removeButton = JButton("Удалить")
-    val personageTree = gui.tree
 
     init {
         layout = GridBagLayout()
@@ -143,6 +143,139 @@ class PersonageChange(gui : GUI) : JComponent(){
         add(changeButton, c)
         c.gridx = 2
         add(removeButton, c)
+
+        removeButton.addActionListener{
+            dropThisPerson()
+            gui.tree.refresh()
+        }
+
+        addButton.addActionListener{
+            addThisPerson()
+            gui.tree.refresh()
+        }
+
+        changeButton.addActionListener{
+            changePersonage(gui.tree.selectedPersonage)
+            gui.tree.refresh()
+        }
     }
 
+    fun dropThisPerson(){
+        if(!check()) return
+        manage.Command.remove(createPers())
+        removeColor()
+    }
+
+    fun addThisPerson(){
+        if (!check()) return
+        manage.Command.add(createPers())
+        removeColor()
+    }
+
+    fun changePersonage(pers : Personage?){
+        if(!check()) return
+        manage.Command.remove(pers)
+        addThisPerson()
+        removeColor()
+    }
+
+    fun moodValue() : Mood? {
+        if (happyMoodRadioButton.isSelected)
+            return Mood.HAPPY
+        if (normalMoodRadioButton.isSelected)
+            return Mood.NORMAL
+        if (sadMoodRadioButton.isSelected)
+            return Mood.SAD
+        if (furyMoodRadioButton.isSelected)
+            return Mood.FURY
+        return null
+    }
+
+    fun check() : Boolean{
+        var res = true
+        if (!(shortiesRadioButton.isSelected || moonlighterRadioButton.isSelected || readerRagioButton.isSelected)){
+            shortiesRadioButton.background = Color(255, 156, 140)
+            moonlighterRadioButton.background = Color(255, 156, 140)
+            readerRagioButton.background = Color(255, 156, 140)
+            res = false
+        }
+        if (nameTextFiled.text.equals("")){
+            nameTextFiled.background = Color(255, 156, 140)
+            res = false
+        }
+        if (xPointSpinner.value == null){
+            xPointSpinner.background = Color(255, 156, 140)
+            res = false
+        }
+        if (yPointSpinner.value == null){
+            yPointSpinner.background = Color(255, 156, 140)
+            res = false
+        }
+        if (hightSpinner.value == null){
+            hightSpinner.value = Color(255, 156, 140)
+            res = false
+        }
+        if (!(happyMoodRadioButton.isSelected || normalMoodRadioButton.isSelected || sadMoodRadioButton.isSelected || furyMoodRadioButton.isSelected)){
+            happyMoodRadioButton.background = Color(255, 156, 140)
+            normalMoodRadioButton.background =  Color(255, 156, 140)
+            sadMoodRadioButton.background = Color(255, 156, 140)
+            furyMoodRadioButton.background = Color(255, 156, 140)
+            res = false
+        }
+
+        return res
+    }
+
+    fun removeColor() {
+        shortiesRadioButton.background = null
+        shortiesRadioButton.isSelected = false
+        moonlighterRadioButton.background = null
+        moonlighterRadioButton.isSelected = false
+        readerRagioButton.background = null
+        readerRagioButton.isSelected = false
+        nameTextFiled.background = Color.white
+        nameTextFiled.text = ""
+        xPointSpinner.background = null
+        xPointSpinner.value = 0
+        yPointSpinner.background = null
+        yPointSpinner.value = 0
+        hightSpinner.background = null
+        hightSpinner.value = 0
+        happyMoodRadioButton.background = null
+        happyMoodRadioButton.isSelected = false
+        normalMoodRadioButton.background =  null
+        normalMoodRadioButton.isSelected = false
+        sadMoodRadioButton.background = null
+        sadMoodRadioButton.isSelected = false
+        furyMoodRadioButton.background = null
+        furyMoodRadioButton.isSelected = false
+    }
+
+    fun createPers() : Personage?{
+        val x = xPointSpinner.model.value as Double
+        val y = yPointSpinner.model.value as Double
+        val h = hightSpinner.value as Int
+        if (shortiesRadioButton.isSelected) {
+            val shorties = Shorties(nameTextFiled.text, x, y, h)
+            shorties.force = forceSpinner.value as Int
+            shorties.mood = moodValue()
+            return shorties
+        }
+        if (moonlighterRadioButton.isSelected){
+            val moonlighter = Moonlighter(nameTextFiled.text, x, y, h)
+            moonlighter.force = forceSpinner.value as Int
+            moonlighter.mood = moodValue()
+            return moonlighter
+        }
+        if (readerRagioButton.isSelected){
+            val reader = Reader(nameTextFiled.text)
+            reader.x = x
+            reader.y = y
+            reader.height = h
+            reader.force = forceSpinner.value as Int
+            reader.mood = moodValue()
+            return reader
+        }
+        return null
+    }
 }
