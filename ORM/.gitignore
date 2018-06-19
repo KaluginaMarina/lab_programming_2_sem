@@ -1,0 +1,10 @@
+*.class
+*.jar
+*.xml
+out
+build
+gradle
+.idea
+.gradle
+gradlew
+gradlew.bat
