@@ -1,10 +1,13 @@
 package client.util;
 
 import client.Client;
+import control.Windows1251Control;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import static java.lang.System.exit;
 
@@ -13,13 +16,17 @@ import static java.lang.System.exit;
  */
 public class FrameErrorConnection extends JFrame {
     public FrameErrorConnection(Client client){
-        super("Ошибка соединения.");
+
+        super();
+        Locale locale = Locale.getDefault();
+        ResourceBundle rb = ResourceBundle.getBundle("Resources", locale, new Windows1251Control());
+        this.setTitle(rb.getString("connection_error"));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setBounds(300, 300, 400, 150);
         this.setAlwaysOnTop(true);
 
-        JLabel head = new JLabel("Произошла ошибка соединения.");
-        JLabel head2 = new JLabel("Попробовать еще раз?");
+        JLabel head = new JLabel(rb.getString("connection_error_text"));
+        JLabel head2 = new JLabel(rb.getString("reset_error"));
         head.setForeground(Color.darkGray);
 
         head.setHorizontalAlignment(JLabel.CENTER);
@@ -40,14 +47,14 @@ public class FrameErrorConnection extends JFrame {
         comstr.gridy = 1;
         this.add(head2, comstr);
 
-        JButton resetBottom = new JButton(new AbstractAction("Обновить") {
+        JButton resetBottom = new JButton(new AbstractAction(rb.getString("reset")) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 FrameErrorConnection.this.dispose();
                 client.run();
             }
         });
-        JButton closeBottom = new JButton(new AbstractAction("Выйти") {
+        JButton closeBottom = new JButton(new AbstractAction(rb.getString("exit")) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 exit(0);

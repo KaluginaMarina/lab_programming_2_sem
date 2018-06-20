@@ -1,7 +1,12 @@
 import client.Client;
 import client.gui.ClientGUI;
+import control.Windows1251Control;
 import model.*;
 
+import javax.swing.*;
+import java.awt.*;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 

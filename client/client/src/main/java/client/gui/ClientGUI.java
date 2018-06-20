@@ -2,11 +2,14 @@ package client.gui;
 
 import client.Client;
 import client.util.ManageCollection;
+import control.Windows1251Control;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class ClientGUI extends JFrame{
 
@@ -30,38 +33,40 @@ public class ClientGUI extends JFrame{
 
 
     public ClientGUI(Client client, int xBounds, int yBounds, int widthBounds, int heightBounds) {
-        super("CLIENT");
+        super();
+        Locale locale = Locale.getDefault();
+        ResourceBundle rb = ResourceBundle.getBundle("Resources", locale, new Windows1251Control());
+        this.setTitle(rb.getString("CLIENT"));
         this.client = client;
-        System.out.println(widthBounds + " " + heightBounds);
         this.setBounds(xBounds, yBounds, widthBounds, heightBounds);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(800, 400));
         //Куча кода с Labelами
-        JLabel filterLabel = new JLabel("Фильтры:");
+        JLabel filterLabel = new JLabel(rb.getString("filter"));
         Font heading = new Font("Verdana", Font.BOLD, 14);
         filterLabel.setFont(heading);
 
-        JLabel typeLabel = new JLabel("Тип:");
+        JLabel typeLabel = new JLabel(rb.getString("type"));
         typeLabel.setForeground(Color.darkGray);
 
-        JLabel nameLabel = new JLabel("Имя:");
+        JLabel nameLabel = new JLabel(rb.getString("name"));
         nameLabel.setForeground(Color.darkGray);
 
-        JLabel powerLabel = new JLabel("Сила:");
+        JLabel powerLabel = new JLabel(rb.getString("power"));
         powerLabel.setForeground(Color.darkGray);
 
-        JLabel moodLabel = new JLabel("Настроение:");
+        JLabel moodLabel = new JLabel(rb.getString("mood"));
         moodLabel.setForeground(Color.darkGray);
 
-        JLabel heightLabel = new JLabel("Высота:");
+        JLabel heightLabel = new JLabel(rb.getString("height"));
         heightLabel.setForeground(Color.darkGray);
 
         //Кучака кода для type
-        this.typeShortiesCheckBox = new JCheckBox("Коротышка", true);
+        this.typeShortiesCheckBox = new JCheckBox(rb.getString("shorties"), true);
         typeShortiesCheckBox.setForeground(Color.darkGray);
-        this.typeMoonlighterCheckBox = new JCheckBox("Лунатик", true);
+        this.typeMoonlighterCheckBox = new JCheckBox(rb.getString("moonlighter"), true);
         typeMoonlighterCheckBox.setForeground(Color.darkGray);
-        this.typeReaderCheckBox = new JCheckBox("Читатель", true);
+        this.typeReaderCheckBox = new JCheckBox(rb.getString("reader"), true);
         typeReaderCheckBox.setForeground(Color.darkGray);
 
         //код для name
@@ -71,11 +76,11 @@ public class ClientGUI extends JFrame{
         this.nameFromSpinner = new JSpinner(spinnerFromModel);
         this.nameToSpinner = new JSpinner(spinnerToModel);
         spinnerToModel.setValue("Я");
-        JLabel fromLabel = new JLabel("От: ");
+        JLabel fromLabel = new JLabel(rb.getString("from"));
         fromLabel.setForeground(Color.darkGray);
-        JLabel toLabel = new JLabel("До: ");
+        JLabel toLabel = new JLabel(rb.getString("to"));
         toLabel.setForeground(Color.darkGray);
-        this.onlyLetterCheckBox = new JCheckBox("Только буквы", false);
+        this.onlyLetterCheckBox = new JCheckBox(rb.getString("only_letter"), false);
 
         //Код для power filter
         int maxPower = ManageCollection.maxPower(client.getHeroes());
@@ -83,22 +88,22 @@ public class ClientGUI extends JFrame{
         SpinnerNumberModel powerToSpinnerModel = new SpinnerNumberModel(maxPower, 0, maxPower,1);
         this.powerFromSpinner = new JSpinner(powerFromSpinnerModel);
         this.powerToSpinner = new JSpinner(powerToSpinnerModel);
-        JLabel fromLabel1 = new JLabel("От: ");
+        JLabel fromLabel1 = new JLabel(rb.getString("from"));
         fromLabel1.setForeground(Color.darkGray);
-        JLabel toLabel1 = new JLabel("До: ");
+        JLabel toLabel1 = new JLabel(rb.getString("to"));
         toLabel1.setForeground(Color.darkGray);
 
         //Код для mood filter
-        this.moodNormalCheckBox = new JCheckBox("Нормальный", true);
+        this.moodNormalCheckBox = new JCheckBox(rb.getString("normal"), true);
         moodNormalCheckBox.setForeground(Color.darkGray);
         moodNormalCheckBox.setBackground(new Color(255, 255, 153));
-        this.moodHappyCheckBox = new JCheckBox("Веселый", true);
+        this.moodHappyCheckBox = new JCheckBox(rb.getString("happy"), true);
         moodHappyCheckBox.setForeground(Color.darkGray);
         moodHappyCheckBox.setBackground(new Color(204, 255, 153));
-        this.moodSadCheckBox = new JCheckBox("Грустный", true);
+        this.moodSadCheckBox = new JCheckBox(rb.getString("sad"), true);
         moodSadCheckBox.setForeground(Color.darkGray);
         moodSadCheckBox.setBackground(new Color(255, 204, 153));
-        this.moodFuryCheckBox = new JCheckBox("Яростный", true);
+        this.moodFuryCheckBox = new JCheckBox(rb.getString("fury"), true);
         moodFuryCheckBox.setForeground(Color.darkGray);
         moodFuryCheckBox.setBackground(new Color(255, 153, 153));
 
@@ -108,13 +113,13 @@ public class ClientGUI extends JFrame{
         heightFromTextField.setHorizontalAlignment(JTextField.RIGHT);
         this.heightToTextField = new JTextField(Integer.toString(maxHeight));
         heightToTextField.setHorizontalAlignment(JTextField.RIGHT);
-        JLabel fromLabel2 = new JLabel("От: ");
+        JLabel fromLabel2 = new JLabel(rb.getString("from"));
         fromLabel2.setForeground(Color.darkGray);
-        JLabel toLabel2 = new JLabel("До: ");
+        JLabel toLabel2 = new JLabel(rb.getString("to"));
         toLabel2.setForeground(Color.darkGray);
 
         //buttons
-        this.startButton = new JButton("Старт");
+        this.startButton = new JButton(rb.getString("start"));
         startButton.setBackground(Color.red);
         startButton.setForeground(Color.white);
         StartButton startbutton = new StartButton(this, ManageCollection.maxHeight(client.getHeroes()), client);
@@ -262,7 +267,7 @@ public class ClientGUI extends JFrame{
         filters.gridwidth = 3;
         filter.add(startButton, filters);
 
-        JButton refresh = new JButton("Обновить");
+        JButton refresh = new JButton(rb.getString("reset"));
         refresh.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

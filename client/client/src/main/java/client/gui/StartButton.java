@@ -1,6 +1,7 @@
 package client.gui;
 
 import client.Client;
+import control.Windows1251Control;
 import model.Mood;
 import model.Personage;
 
@@ -8,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.stream.Collectors;
 
@@ -28,7 +31,10 @@ public class StartButton implements ActionListener{
     public void actionPerformed(ActionEvent e){
         class ErrorFrame extends JFrame {
             private ErrorFrame(String text){
-                super("Ошибка");
+                super();
+                Locale locale = Locale.getDefault();
+                ResourceBundle rb = ResourceBundle.getBundle("Resources", locale, new Windows1251Control());
+                this.setTitle(rb.getString("error"));
                 this.setBounds(400, 300, 450, 100);
                 this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 JLabel info = new JLabel(text);
@@ -40,6 +46,10 @@ public class StartButton implements ActionListener{
                 this.add(info, c);
             }
         }
+
+        Locale locale = Locale.getDefault();
+        ResourceBundle rb = ResourceBundle.getBundle("Resources", locale, new Windows1251Control());
+
         //вернуть все цвета
         gui.nameFromSpinner.setBackground(null);
         gui.nameToSpinner.setBackground(null);
@@ -49,17 +59,17 @@ public class StartButton implements ActionListener{
         gui.heightToTextField.setBackground(null);
 
         boolean error = false;
-        if (gui.startButton.getText().equals("Старт")) {
+        if (gui.startButton.getText().equals(rb.getString("start"))) {
             //обработка ошибок
             if (gui.nameFromSpinner.getValue().toString().compareTo(gui.nameToSpinner.getValue().toString()) > 0) {
-                ErrorFrame nameSpinnerError = new ErrorFrame("Значение nameFromSpinner > значения nameToSpinner");
+                ErrorFrame nameSpinnerError = new ErrorFrame(rb.getString("nameFromSpinner>nameToSpinner"));
                 nameSpinnerError.setVisible(true);
                 gui.nameFromSpinner.setBackground(new Color(255, 76, 76));
                 gui.nameToSpinner.setBackground(new Color(255, 76, 76));
                 error = true;
             }
             if (Integer.parseInt(gui.powerFromSpinner.getValue().toString()) > Integer.parseInt(gui.powerToSpinner.getValue().toString())) {
-                ErrorFrame powerSpinnerError = new ErrorFrame("Значение powerFromSpinner > значения powerToSpinner");
+                ErrorFrame powerSpinnerError = new ErrorFrame(rb.getString("powerFromSpinner>powerToSpinner"));
                 powerSpinnerError.setVisible(true);
                 gui.powerFromSpinner.setBackground(new Color(255, 76, 76));
                 gui.powerToSpinner.setBackground(new Color(255, 76, 76));
@@ -70,7 +80,7 @@ public class StartButton implements ActionListener{
             try {
                 heightFrom = Integer.parseInt(gui.heightFromTextField.getText());
             } catch (NumberFormatException ex) {
-                ErrorFrame nameSpinnerError = new ErrorFrame("Значение heightFromTextFiled должно быть числом");
+                ErrorFrame nameSpinnerError = new ErrorFrame(rb.getString("heightFromTextFiledError"));
                 nameSpinnerError.setVisible(true);
                 gui.heightFromTextField.setBackground(new Color(255, 76, 76));
                 error = true;
@@ -78,36 +88,36 @@ public class StartButton implements ActionListener{
             try {
                 heightTo = Integer.parseInt(gui.heightToTextField.getText());
             } catch (NumberFormatException ex) {
-                ErrorFrame nameSpinnerError = new ErrorFrame("Значение heightToTextFiled должно быть числом");
+                ErrorFrame nameSpinnerError = new ErrorFrame(rb.getString("heightToTextFiledError"));
                 nameSpinnerError.setVisible(true);
                 gui.heightToTextField.setBackground(new Color(255, 76, 76));
                 error = true;
             }
             if (heightFrom != null && heightFrom < 0) {
-                ErrorFrame nameSpinnerError = new ErrorFrame("Значение heightFromTextFiled < heightMinValue (heightMinValue = 0)");
+                ErrorFrame nameSpinnerError = new ErrorFrame(rb.getString("heightFromTextFiled<heightMinValue"));
                 nameSpinnerError.setVisible(true);
                 gui.heightFromTextField.setBackground(new Color(255, 76, 76));
                 error = true;
             }
             if (heightFrom != null && heightFrom > heightMaxValue) {
-                ErrorFrame nameSpinnerError = new ErrorFrame("Значение heightFromTextFiled > heightMaxValue (heightMaxValue = " + heightMaxValue + ")");
+                ErrorFrame nameSpinnerError = new ErrorFrame(rb.getString("heightFromTextFiled>heightMaxValue") + heightMaxValue + ")");
                 nameSpinnerError.setVisible(true);
                 gui.heightFromTextField.setBackground(new Color(255, 76, 76));
                 error = true;
             }
             if (heightTo != null && heightTo < 0) {
-                ErrorFrame nameSpinnerError = new ErrorFrame("Значение heightToTextFiled < heightMinValue (heightMinValue = 0)");
+                ErrorFrame nameSpinnerError = new ErrorFrame(rb.getString("heightToTextFiled<heightMinValue"));
                 nameSpinnerError.setVisible(true);
                 error = true;
                 gui.heightToTextField.setBackground(new Color(255, 76, 76));
             }
             if (heightTo != null && heightTo > heightMaxValue) {
-                ErrorFrame nameSpinnerError = new ErrorFrame("Значение heightToTextFiled > heightMaxValue (heightMaxValue = " + heightMaxValue + ")");
+                ErrorFrame nameSpinnerError = new ErrorFrame(rb.getString("heightToTextFiled>heightMaxValue") + heightMaxValue + ")");
                 nameSpinnerError.setVisible(true);
                 error = true;
             }
             if (heightFrom != null && heightTo != null && heightFrom > heightTo) {
-                ErrorFrame nameSpinnerError = new ErrorFrame("Значение heightFromTextFiled > значения heightToTextFiled");
+                ErrorFrame nameSpinnerError = new ErrorFrame(rb.getString("heightFromTextFiled>heightToTextFiled"));
                 nameSpinnerError.setVisible(true);
                 gui.heightFromTextField.setBackground(new Color(255, 76, 76));
                 gui.heightToTextField.setBackground(new Color(255, 76, 76));
@@ -117,8 +127,8 @@ public class StartButton implements ActionListener{
         //обработка нажатия кнопки
         if(!error){
             //start
-            if(gui.startButton.getText().equals("Старт")){
-                gui.startButton.setText("Стоп");
+            if(gui.startButton.getText().equals(rb.getString("start"))){
+                gui.startButton.setText(rb.getString("stop"));
                 gui.startButton.setBackground(Color.lightGray);
                 gui.startButton.setForeground(Color.darkGray);
 
@@ -167,7 +177,7 @@ public class StartButton implements ActionListener{
             }
             //stop
             else {
-                gui.startButton.setText("Старт");
+                gui.startButton.setText(rb.getString("start"));
                 gui.startButton.setBackground(Color.red);
                 gui.startButton.setForeground(Color.white);
                 heroesFilter = client.getHeroes();
