@@ -248,8 +248,9 @@ public class Client implements Runnable{
 
         FrameErrorConnection fec = new FrameErrorConnection(this);
         fec.setVisible(true);
+        ClientGUI tmp = new ClientGUI(this, 100, 100, 1200, 600, gui.locale);
         if (gui != null) gui.dispose();
-        gui = new ClientGUI(this, 100, 100, 1200, 600);
+        gui = tmp;
     }
 
 

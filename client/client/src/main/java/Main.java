@@ -18,7 +18,7 @@ public class Main {
         Thread clientThread = new Thread(client);
         clientThread.start();
 
-        ClientGUI gui = new ClientGUI(client, 100, 100, 1200, 600);
+        ClientGUI gui = new ClientGUI(client, 100, 100, 1200, 600, Locale.getDefault());
         client.gui = gui;
     }
 }

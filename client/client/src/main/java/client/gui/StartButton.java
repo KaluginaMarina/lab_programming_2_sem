@@ -19,12 +19,14 @@ public class StartButton implements ActionListener{
     private int heightMaxValue;
     private Client client;
     ConcurrentLinkedDeque<Personage> heroesFilter;
+    private Locale locale;
 
-    public StartButton(ClientGUI gui, int heightMaxValue, Client client){
+    public StartButton(ClientGUI gui, int heightMaxValue, Client client, Locale locale){
         this.client = client;
         this.gui = gui;
         this.heightMaxValue = heightMaxValue;
         heroesFilter = client.getHeroes();
+        this.locale = locale;
     }
 
     @Override
@@ -32,7 +34,6 @@ public class StartButton implements ActionListener{
         class ErrorFrame extends JFrame {
             private ErrorFrame(String text){
                 super();
-                Locale locale = Locale.getDefault();
                 ResourceBundle rb = ResourceBundle.getBundle("Resources", locale, new Windows1251Control());
                 this.setTitle(rb.getString("error"));
                 this.setBounds(400, 300, 450, 100);
@@ -47,7 +48,6 @@ public class StartButton implements ActionListener{
             }
         }
 
-        Locale locale = Locale.getDefault();
         ResourceBundle rb = ResourceBundle.getBundle("Resources", locale, new Windows1251Control());
 
         //вернуть все цвета
@@ -187,5 +187,9 @@ public class StartButton implements ActionListener{
                 }
             }
         }
+    }
+
+    public void changeLanguage(Locale locale){
+        this.locale = locale;
     }
 }

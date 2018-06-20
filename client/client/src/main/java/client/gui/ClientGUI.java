@@ -30,80 +30,89 @@ public class ClientGUI extends JFrame{
     JButton startButton;
     PanelCollection panel;
     Client client;
+    private JLabel typeLabel;
+    private JLabel filterLabel;
+    private JLabel nameLabel;
+    private JLabel powerLabel;
+    private JLabel moodLabel;
+    private JLabel heightLabel;
+    private JLabel fromLabel;
+    private JLabel toLabel;
+    private JLabel fromLabel1;
+    private JLabel toLabel1;
+    private JLabel fromLabel2;
+    private JLabel toLabel2;
+    private JButton refresh;
+    public Locale locale;
+    StartButton startbutton;
 
-
-    public ClientGUI(Client client, int xBounds, int yBounds, int widthBounds, int heightBounds) {
+    public ClientGUI(Client client, int xBounds, int yBounds, int widthBounds, int heightBounds, Locale locale) {
         super();
-        Locale locale = Locale.getDefault();
-        ResourceBundle rb = ResourceBundle.getBundle("Resources", locale, new Windows1251Control());
-        this.setTitle(rb.getString("CLIENT"));
+        this.locale = locale;
         this.client = client;
         this.setBounds(xBounds, yBounds, widthBounds, heightBounds);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(800, 400));
         //Куча кода с Labelами
-        JLabel filterLabel = new JLabel(rb.getString("filter"));
+        filterLabel = new JLabel();
         Font heading = new Font("Verdana", Font.BOLD, 14);
         filterLabel.setFont(heading);
-
-        JLabel typeLabel = new JLabel(rb.getString("type"));
+        typeLabel = new JLabel();
         typeLabel.setForeground(Color.darkGray);
-
-        JLabel nameLabel = new JLabel(rb.getString("name"));
+        nameLabel = new JLabel();
         nameLabel.setForeground(Color.darkGray);
-
-        JLabel powerLabel = new JLabel(rb.getString("power"));
+        powerLabel = new JLabel();
         powerLabel.setForeground(Color.darkGray);
 
-        JLabel moodLabel = new JLabel(rb.getString("mood"));
+        moodLabel = new JLabel();
         moodLabel.setForeground(Color.darkGray);
 
-        JLabel heightLabel = new JLabel(rb.getString("height"));
+        heightLabel = new JLabel();
         heightLabel.setForeground(Color.darkGray);
 
         //Кучака кода для type
-        this.typeShortiesCheckBox = new JCheckBox(rb.getString("shorties"), true);
+        typeShortiesCheckBox = new JCheckBox("", true);
         typeShortiesCheckBox.setForeground(Color.darkGray);
-        this.typeMoonlighterCheckBox = new JCheckBox(rb.getString("moonlighter"), true);
+        typeMoonlighterCheckBox = new JCheckBox("", true);
         typeMoonlighterCheckBox.setForeground(Color.darkGray);
-        this.typeReaderCheckBox = new JCheckBox(rb.getString("reader"), true);
+        typeReaderCheckBox = new JCheckBox("", true);
         typeReaderCheckBox.setForeground(Color.darkGray);
 
         //код для name
         String[] letter = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","А","Б","В","Г","Д","Е","Ж","З","И","Й","К","Л","М","Н","О","П","Р","С","Т","У","Ф","Х","Ц","Ч","Ш","Щ","Ъ","Ы","Ь","Э","Ю","Я"};
         SpinnerModel spinnerFromModel = new SpinnerListModel(letter);
         SpinnerModel spinnerToModel = new SpinnerListModel(letter);
-        this.nameFromSpinner = new JSpinner(spinnerFromModel);
-        this.nameToSpinner = new JSpinner(spinnerToModel);
+        nameFromSpinner = new JSpinner(spinnerFromModel);
+        nameToSpinner = new JSpinner(spinnerToModel);
         spinnerToModel.setValue("Я");
-        JLabel fromLabel = new JLabel(rb.getString("from"));
+        fromLabel = new JLabel();
         fromLabel.setForeground(Color.darkGray);
-        JLabel toLabel = new JLabel(rb.getString("to"));
+        toLabel = new JLabel();
         toLabel.setForeground(Color.darkGray);
-        this.onlyLetterCheckBox = new JCheckBox(rb.getString("only_letter"), false);
+        onlyLetterCheckBox = new JCheckBox("", false);
 
         //Код для power filter
         int maxPower = ManageCollection.maxPower(client.getHeroes());
         SpinnerNumberModel powerFromSpinnerModel = new SpinnerNumberModel(0, 0, maxPower, 1);
         SpinnerNumberModel powerToSpinnerModel = new SpinnerNumberModel(maxPower, 0, maxPower,1);
-        this.powerFromSpinner = new JSpinner(powerFromSpinnerModel);
-        this.powerToSpinner = new JSpinner(powerToSpinnerModel);
-        JLabel fromLabel1 = new JLabel(rb.getString("from"));
+        powerFromSpinner = new JSpinner(powerFromSpinnerModel);
+        powerToSpinner = new JSpinner(powerToSpinnerModel);
+        fromLabel1 = new JLabel();
         fromLabel1.setForeground(Color.darkGray);
-        JLabel toLabel1 = new JLabel(rb.getString("to"));
+        toLabel1 = new JLabel();
         toLabel1.setForeground(Color.darkGray);
 
         //Код для mood filter
-        this.moodNormalCheckBox = new JCheckBox(rb.getString("normal"), true);
+        moodNormalCheckBox = new JCheckBox("", true);
         moodNormalCheckBox.setForeground(Color.darkGray);
         moodNormalCheckBox.setBackground(new Color(255, 255, 153));
-        this.moodHappyCheckBox = new JCheckBox(rb.getString("happy"), true);
+        moodHappyCheckBox = new JCheckBox("", true);
         moodHappyCheckBox.setForeground(Color.darkGray);
         moodHappyCheckBox.setBackground(new Color(204, 255, 153));
-        this.moodSadCheckBox = new JCheckBox(rb.getString("sad"), true);
+        moodSadCheckBox = new JCheckBox("", true);
         moodSadCheckBox.setForeground(Color.darkGray);
         moodSadCheckBox.setBackground(new Color(255, 204, 153));
-        this.moodFuryCheckBox = new JCheckBox(rb.getString("fury"), true);
+        moodFuryCheckBox = new JCheckBox("", true);
         moodFuryCheckBox.setForeground(Color.darkGray);
         moodFuryCheckBox.setBackground(new Color(255, 153, 153));
 
@@ -113,16 +122,16 @@ public class ClientGUI extends JFrame{
         heightFromTextField.setHorizontalAlignment(JTextField.RIGHT);
         this.heightToTextField = new JTextField(Integer.toString(maxHeight));
         heightToTextField.setHorizontalAlignment(JTextField.RIGHT);
-        JLabel fromLabel2 = new JLabel(rb.getString("from"));
+        fromLabel2 = new JLabel();
         fromLabel2.setForeground(Color.darkGray);
-        JLabel toLabel2 = new JLabel(rb.getString("to"));
+        toLabel2 = new JLabel();
         toLabel2.setForeground(Color.darkGray);
 
         //buttons
-        this.startButton = new JButton(rb.getString("start"));
+        startButton = new JButton();
         startButton.setBackground(Color.red);
         startButton.setForeground(Color.white);
-        StartButton startbutton = new StartButton(this, ManageCollection.maxHeight(client.getHeroes()), client);
+        startbutton = new StartButton(this, ManageCollection.maxHeight(client.getHeroes()), client, locale);
         startButton.addActionListener(startbutton);
 
         //Кучка необходимого кода
@@ -141,6 +150,10 @@ public class ClientGUI extends JFrame{
         filter.setLayout(new GridBagLayout());
 
         GridBagConstraints filters = new GridBagConstraints();
+
+        JMenuBar menuBar = new JMenuBar();
+        menuBar.add(new Menu(this));
+        this.setJMenuBar(menuBar);
 
         //Код, для расположения всего этого
         //Заголовок
@@ -267,11 +280,11 @@ public class ClientGUI extends JFrame{
         filters.gridwidth = 3;
         filter.add(startButton, filters);
 
-        JButton refresh = new JButton(rb.getString("reset"));
+        refresh = new JButton();
         refresh.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ClientGUI tmp = new ClientGUI(client, ClientGUI.this.getBounds().x, ClientGUI.this.getBounds().y, ClientGUI.this.getBounds().width, ClientGUI.this.getBounds().height);
+                ClientGUI tmp = new ClientGUI(client, ClientGUI.this.getBounds().x, ClientGUI.this.getBounds().y, ClientGUI.this.getBounds().width, ClientGUI.this.getBounds().height, locale);
                 panel = new PanelCollection(client.getHeroes(), tmp, startbutton);
                 ClientGUI.this.setVisible(false);
                 tmp.setVisible(true);
@@ -287,6 +300,36 @@ public class ClientGUI extends JFrame{
         this.add(panel);
         this.add(filter);
 
+        changeLanguage(Locale.getDefault());
         this.setVisible(true);
+    }
+
+    void changeLanguage(Locale locale){
+        ResourceBundle rb = ResourceBundle.getBundle("Resources", locale, new Windows1251Control());
+        this.setTitle(rb.getString("CLIENT"));
+        filterLabel.setText(rb.getString("filter"));
+        typeLabel.setText(rb.getString("type"));
+        nameLabel.setText(rb.getString("name"));
+        powerLabel.setText(rb.getString("power"));
+        moodLabel.setText(rb.getString("mood"));
+        heightLabel.setText(rb.getString("height"));
+        typeShortiesCheckBox.setText(rb.getString("shorties"));
+        typeMoonlighterCheckBox.setText(rb.getString("moonlighter"));
+        typeReaderCheckBox.setText(rb.getString("reader"));
+        fromLabel.setText(rb.getString("from"));
+        toLabel.setText(rb.getString("to"));
+        onlyLetterCheckBox.setText(rb.getString("only_letter"));
+        fromLabel1.setText(rb.getString("from"));
+        toLabel1.setText(rb.getString("to"));
+        moodNormalCheckBox.setText(rb.getString("normal"));
+        moodHappyCheckBox.setText(rb.getString("happy"));
+        moodSadCheckBox.setText(rb.getString("sad"));
+        moodFuryCheckBox.setText(rb.getString("fury"));
+        moodFuryCheckBox.setText(rb.getString("fury"));
+        fromLabel2.setText(rb.getString("from"));
+        toLabel2.setText(rb.getString("to"));
+        startButton.setText(rb.getString("start"));
+        refresh.setText(rb.getString("reset"));
+        startbutton.changeLanguage(locale);
     }
 }
