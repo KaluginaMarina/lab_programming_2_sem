@@ -1,7 +1,7 @@
 package client.util;
 
 import client.Client;
-import control.Windows1251Control;
+import control.UTF8Control;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +19,7 @@ public class FrameErrorConnection extends JFrame {
 
         super();
         Locale locale = Locale.getDefault();
-        ResourceBundle rb = ResourceBundle.getBundle("Resources", locale, new Windows1251Control());
+        ResourceBundle rb = ResourceBundle.getBundle("Resources", locale, new UTF8Control());
         this.setTitle(rb.getString("connection_error"));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setBounds(300, 300, 400, 150);

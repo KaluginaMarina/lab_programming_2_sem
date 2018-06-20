@@ -1,6 +1,6 @@
 package client.gui;
 
-import control.Windows1251Control;
+import control.UTF8Control;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -12,7 +12,7 @@ public class Menu extends JMenu {
     Menu (ClientGUI gui){
         super();
         Locale locale = Locale.getDefault();
-        ResourceBundle rb = ResourceBundle.getBundle("Resources", locale, new Windows1251Control());
+        ResourceBundle rb = ResourceBundle.getBundle("Resources", locale, new UTF8Control());
         this.setText(rb.getString("language"));
 
         JMenuItem ru_Ru = new JMenuItem("Русский");

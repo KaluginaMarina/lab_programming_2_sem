@@ -2,7 +2,7 @@ package client.gui;
 
 import client.Client;
 import client.util.ManageCollection;
-import control.Windows1251Control;
+import control.UTF8Control;
 
 import javax.swing.*;
 import java.awt.*;
@@ -305,7 +305,7 @@ public class ClientGUI extends JFrame{
     }
 
     void changeLanguage(Locale locale){
-        ResourceBundle rb = ResourceBundle.getBundle("Resources", locale, new Windows1251Control());
+        ResourceBundle rb = ResourceBundle.getBundle("Resources", locale, new UTF8Control());
         this.setTitle(rb.getString("CLIENT"));
         filterLabel.setText(rb.getString("filter"));
         typeLabel.setText(rb.getString("type"));

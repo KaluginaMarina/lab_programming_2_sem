@@ -1,7 +1,7 @@
 package client.gui;
 
 import client.Client;
-import control.Windows1251Control;
+import control.UTF8Control;
 import model.Mood;
 import model.Personage;
 
@@ -34,7 +34,7 @@ public class StartButton implements ActionListener{
         class ErrorFrame extends JFrame {
             private ErrorFrame(String text){
                 super();
-                ResourceBundle rb = ResourceBundle.getBundle("Resources", locale, new Windows1251Control());
+                ResourceBundle rb = ResourceBundle.getBundle("Resources", locale, new UTF8Control());
                 this.setTitle(rb.getString("error"));
                 this.setBounds(400, 300, 450, 100);
                 this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -48,7 +48,7 @@ public class StartButton implements ActionListener{
             }
         }
 
-        ResourceBundle rb = ResourceBundle.getBundle("Resources", locale, new Windows1251Control());
+        ResourceBundle rb = ResourceBundle.getBundle("Resources", locale, new UTF8Control());
 
         //вернуть все цвета
         gui.nameFromSpinner.setBackground(null);
@@ -188,6 +188,8 @@ public class StartButton implements ActionListener{
             }
         }
     }
+
+
 
     public void changeLanguage(Locale locale){
         this.locale = locale;

@@ -9,7 +9,7 @@ import java.util.Locale;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
-public class Windows1251Control extends ResourceBundle.Control {
+public class UTF8Control extends ResourceBundle.Control {
     public ResourceBundle newBundle
             (String baseName, Locale locale, String format, ClassLoader loader, boolean reload)
             throws IllegalAccessException, InstantiationException, IOException
@@ -34,7 +34,7 @@ public class Windows1251Control extends ResourceBundle.Control {
         if (stream != null) {
             try {
                 // Only this line is changed to make it to read properties files as UTF-8.
-                bundle = new PropertyResourceBundle(new InputStreamReader(stream, "windows-1251"));
+                bundle = new PropertyResourceBundle(new InputStreamReader(stream, "utf-8"));
             } finally {
                 stream.close();
             }
