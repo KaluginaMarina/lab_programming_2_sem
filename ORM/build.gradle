@@ -17,7 +17,6 @@ repositories {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    compile "io.github.lukehutch:fast-classpath-scanner:2.21"
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     compile("org.postgresql:postgresql:42.2.2")
 }
