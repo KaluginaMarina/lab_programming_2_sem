@@ -179,7 +179,7 @@ class PersonageChange(gui : GUI) : JComponent(){
         removeColor()
     }
 
-    fun moodValue() : Mood? {
+    fun moodValue() : Mood {
         if (happyMoodRadioButton.isSelected)
             return Mood.HAPPY
         if (normalMoodRadioButton.isSelected)
@@ -188,7 +188,7 @@ class PersonageChange(gui : GUI) : JComponent(){
             return Mood.SAD
         if (furyMoodRadioButton.isSelected)
             return Mood.FURY
-        return null
+        return Mood.NORMAL
     }
 
     fun check() : Boolean{
@@ -251,7 +251,7 @@ class PersonageChange(gui : GUI) : JComponent(){
         furyMoodRadioButton.isSelected = false
     }
 
-    fun createPers() : Personage?{
+    fun createPers() : Personage? {
         val x = xPointSpinner.model.value as Double
         val y = yPointSpinner.model.value as Double
         val h = hightSpinner.value as Int

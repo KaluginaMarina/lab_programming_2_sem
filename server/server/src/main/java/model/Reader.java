@@ -1,15 +1,13 @@
 package model;
 
 
+import orm.Table;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Reader extends Personage {
    public Reader(String name) {
-       this.type = "Читатель";
-       this.name = name;
-       this.force = 0;
-       this.height = 158;
+       super( "Лунатик", name, 0.0, 0.0, 0, 158, 0, Mood.NORMAL, LocalDateTime.now());
     }
-
-
 }

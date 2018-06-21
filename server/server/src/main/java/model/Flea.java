@@ -20,13 +20,13 @@ public class Flea implements Insects {
 
     @Override
     public boolean fallByCollar(Personage p) {
-        if (this.x == p.x && this.y == p.y && this.z >= p.height) {
+        if (this.x == p.getX() && this.y == p.getY() && this.z >= p.getHeight()) {
             System.out.println(this.name + " провалился за шиворот.");
-            this.z = 6 * p.height / 7;
+            this.z = 6 * p.getHeight() / 7;
             return true;
         }
         else {
-            System.out.println(this.name + " попытался запрыгнуть " + p.name + " за шиворот, но у него не получилось.");
+            System.out.println(this.name + " попытался запрыгнуть " + p.getName() + " за шиворот, но у него не получилось.");
             this.z = 0;
             return false;
         }
@@ -34,7 +34,7 @@ public class Flea implements Insects {
 
     @Override
     public void biteBack(Personage p) {
-        p.force--;
+        p.setForce(p.getForce()-1);
         System.out.println(this.name + " принялся кусать спину.");
     }
 
@@ -51,7 +51,7 @@ public class Flea implements Insects {
         }
         else {
             Moonlighter tmp = (Moonlighter) s;
-            return (tmp.name.equals(this.name)  && this.force == tmp.force && this.type.equals(tmp.type));
+            return (tmp.getName().equals(this.name)  && this.force == tmp.getForce() && this.type.equals(tmp.getType()));
         }
     }
 

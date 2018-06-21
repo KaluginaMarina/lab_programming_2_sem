@@ -1,6 +1,7 @@
 *.class
 *.jar
 *.xml
+*.iml
 out
 build
 gradle

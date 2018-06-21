@@ -15,6 +15,17 @@ public abstract class Personage implements Comparable<Personage>, Serializable{
     public Mood mood = Mood.NORMAL;
     public LocalDateTime dateCreate;
 
+	Personage(String type, String name, Double x, Double y, int force, int height, Mood mood, LocalDateTime dateCreate){
+        this.type = type;
+        this.name = name;
+        this.x = x;
+        this.y = y;
+        this.force = force;
+        this.height = height;
+        this.mood = mood;
+        this.dateCreate = dateCreate;
+    }
+	
     @Override
     public boolean equals(Object s) {
         if (s == null) {

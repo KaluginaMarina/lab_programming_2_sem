@@ -32,9 +32,9 @@ public class MessangeToInsects {
      * Причем, если skillSwear у насекомого больше, чем у персонажа, то он отвечает.
      */
     void sayMessange() throws IOException {
-        System.out.println("\"" + msg + "\"" + " - " + tone + " " + fromWhom.name + ".");
+        System.out.println("\"" + msg + "\"" + " - " + tone + " " + fromWhom.getName() + ".");
 
-        if (toWhom.skillSwear >= fromWhom.skillSwear){
+        if (toWhom.skillSwear >= fromWhom.getSkillSwear()){
 
             class Answer {
                 private ArrayList<String> tone = new ArrayList<>();

@@ -69,42 +69,42 @@ abstract class CollectionManage {
                 switch (type){
                     case "Читатель": {
                         Reader reader = new Reader(sc.next());
-                        reader.x = sc.nextDouble();
-                        reader.y = sc.nextDouble();
-                        reader.height = sc.nextInt();
-                        reader.force = sc.nextInt();
+                        reader.setX(sc.nextDouble());
+                        reader.setY(sc.nextDouble());
+                        reader.setHeight(sc.nextInt());
+                        reader.setForce(sc.nextInt());
                         if (!reader.setMood(sc.next())){
                             throw new Exception();
                         }
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                         LocalDateTime dateTime = LocalDateTime.parse(sc.next().replace("T", " "), formatter);
-                        reader.dateCreate = dateTime;
+                        reader.setCreateDate(dateTime);
                         heroes.add(reader);
                         break;
                     }
                     case "Лунатик": {
                         Moonlighter moonlighter = new Moonlighter(sc.next(), sc.nextDouble(), sc.nextDouble(), sc.nextInt());
-                        moonlighter.skillSwear = sc.nextInt();
-                        moonlighter.force = sc.nextInt();
+                        moonlighter.setSkillSwear(sc.nextInt());
+                        moonlighter.setForce(sc.nextInt());
                         if (!moonlighter.setMood(sc.next())){
                             throw new Exception();
                         }
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                         LocalDateTime dateTime = LocalDateTime.parse(sc.next().replace("T", " "), formatter);
-                        moonlighter.dateCreate = dateTime;
+                        moonlighter.setDateCreate(dateTime);
                         heroes.add(moonlighter);
                         break;
                     }
                     case "Коротышка": {
                         Shorties shorties = new Shorties(sc.next(), sc.nextDouble(), sc.nextDouble(), sc.nextInt());
-                        shorties.skillSwear = sc.nextInt();
-                        shorties.force = sc.nextInt();
+                        shorties.setSkillSwear(sc.nextInt());
+                        shorties.setForce(sc.nextInt());
                         if (!shorties.setMood(sc.next())){
                             throw new Exception();
                         }
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                         LocalDateTime dateTime = LocalDateTime.parse(sc.next().replace("T", " "), formatter);
-                        shorties.dateCreate = dateTime;
+                        shorties.setDateCreate(dateTime);
                         heroes.add(shorties);
                         break;
                     }
@@ -164,7 +164,7 @@ abstract class CollectionManage {
      */
     public static String toSCV(){
         return heroes.stream()
-                .map(x -> (x.type + "," + x.name + "," + x.x + "," + x.y + "," + x.height + "," + x.skillSwear + "," + x.force + "," + x.mood + "," + x.dateCreate.toString().replace("T", " ") +  "\n"))
+                .map(x -> (x.getType() + "," + x.getName() + "," + x.getX() + "," + x.getY() + "," + x.getHeight() + "," + x.getSkillSwear() + "," + x.getForce() + "," + x.getMood() + "," + x.getDateCreate().toString().replace("T", " ") +  "\n"))
                 .collect(Collectors.joining());
     }
 
@@ -209,8 +209,8 @@ abstract class CollectionManage {
             switch ((String)ob.get("type")) {
                 case "Читатель": {
                     Reader reader = new Reader((String) ob.get("name"));
-                    reader.height = toIntExact((long) ob.get("height"));
-                    reader.force = toIntExact((long) ob.get("force"));
+                    reader.setHeight(toIntExact((long) ob.get("height")));
+                    reader.setForce(toIntExact((long) ob.get("force")));
                     if(!reader.setMood((String) ob.get("mood"))){
                         throw new Exception();
                     }
@@ -218,8 +218,8 @@ abstract class CollectionManage {
                 }
                 case "Лунатик": {
                     Moonlighter moonlighter = new Moonlighter((String) ob.get("name"), (double) ob.get("x"), (double) ob.get("y"), toIntExact((long) ob.get("height")));
-                    moonlighter.skillSwear =  toIntExact((long) ob.get("skillSwear"));
-                    moonlighter.force =  toIntExact((long) ob.get("force"));
+                    moonlighter.setSkillSwear(toIntExact((long) ob.get("skillSwear")));
+                    moonlighter.setForce(toIntExact((long) ob.get("force")));
                     if(!moonlighter.setMood((String) ob.get("mood"))){
                         throw new Exception();
                     }
@@ -227,8 +227,8 @@ abstract class CollectionManage {
                 }
                 case "Коротышка": {
                     Shorties shorties = new Shorties((String) ob.get("name"), (double) ob.get("x"), (double) ob.get("y"), toIntExact((long) ob.get("height")));
-                    shorties.skillSwear =  toIntExact((long) ob.get("skillSwear"));
-                    shorties.force =  toIntExact((long) ob.get("force"));
+                    shorties.setSkillSwear(toIntExact((long) ob.get("skillSwear")));
+                    shorties.setForce(toIntExact((long) ob.get("force")));
                     if(!shorties.setMood((String) ob.get("mood"))){
                         throw new Exception();
                     }

@@ -6,6 +6,7 @@ import model.Reader;
 import model.Shorties;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import orm.Repository;
 
 import java.util.Date;
 import java.util.concurrent.ConcurrentLinkedDeque;
@@ -33,7 +34,6 @@ public class Command extends CollectionManage{
         changeDate = new Date();
         return true;
     }
-
 
     /**
      *  load - перечитать коллекцию из файла

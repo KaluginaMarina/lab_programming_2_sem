@@ -1,18 +1,15 @@
 package model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Shorties extends Personage {
 
     public Shorties (String name, double x, double y, int height){
-        this.name = name;
-        this.type = "Коротышка";
-        this.x = x;
-        this.y = y;
-        this.force = 5;
-        this.height = height;
-        this.skillSwear = 3;
+        super( "Лунатик", name, x, y, 3, height, 5, Mood.NORMAL, LocalDateTime.now(
+
+        ));
     }
 
     /**
@@ -22,11 +19,11 @@ public class Shorties extends Personage {
      */
     public boolean compare(Shorties s){
         if (equals(s)) {
-            System.out.println(this.type + " похож на " + this.name + ".");
+            System.out.println(this.getType() + " похож на " + this.getName() + ".");
             return true;
         }
         else {
-            System.out.println(this.type + " не похож на " + this.name + ".");
+            System.out.println(this.getType() + " не похож на " + this.getName() + ".");
             return false;
         }
     }
@@ -39,28 +36,28 @@ public class Shorties extends Personage {
         Cometo xy = new Cometo(){
             @Override
             public double coordinate(Personage who, Personage where){
-                if (who.x - where.x < 0){
-                    return where.x + Math.random()*10;
+                if (who.getX() - where.getX() < 0){
+                    return where.getX() + Math.random()*10;
                 }
-                else if (who.x - where.x > 0){
-                    return where.x - Math.random()*10;
+                else if (who.getX() - where.getX() > 0){
+                    return where.getX() - Math.random()*10;
                 }
                 else {
-                    return where.x;
+                    return where.getX();
                 }
             }
         };
-        this.x = xy.coordinate(this, p);
-        this.y = xy.coordinate(this, p);
-        System.out.println("Какой-то " + this.type + " подошел к " + p.name + ".");
+        this.setX(xy.coordinate(this, p));
+        this.setY(xy.coordinate(this, p));
+        System.out.println("Какой-то " + this.getType() + " подошел к " + p.getName() + ".");
     }
 
     /**
      * Коротышка скрылся за деревом
      */
     public void goForThree(Tree t){
-        this.x = t.x;
-        this.y = t.y;
-        System.out.println(this.type + " скрылся за " + t.name + ".");
+        this.setX(t.x);
+        this.setY(t.y);
+        System.out.println(this.getType() + " скрылся за " + t.name + ".");
     }
 }

@@ -1,6 +1,7 @@
 package model;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import static model.Mood.*;
@@ -14,21 +15,14 @@ public class Moonlighter extends Personage{
     }
 
     public Moonlighter (String name, double x, double y, int height){
-        this.name = name;
-        this.type = "Лунатик";
-        this.x = x;
-        this.y =y;
-        this.force = 7;
-        this.height = height;
-        this.skillSwear = 10;
-
+        super("Лунатик", name, x, y, 7, height, 10, Mood.NORMAL, LocalDateTime.now());
     }
 
     /**
      *  Поднять голову
      */
     public void headUp() {
-        System.out.println(this.name + " поднял голову.");
+        System.out.println(this.getName() + " поднял голову.");
     }
 
     static enum ShortiesType{
@@ -39,14 +33,12 @@ public class Moonlighter extends Personage{
      * Увидеть коротышку
      */
     public void seeShorties(Shorties k, Shorties... p ){
-        //Добавим специально сюда локальный класс, например ОпределитьРасстояниеМеждуОбъектамик который будет специально,
-        // чтобы определить расстояние по тексту (вдали они друг для друга или нет)
         /**
          * Локальный класс, который определяет расстояние между коротышками и говорит дадеко ли они от нас находятся
          */
         class Distance{
              private ShortiesType far(Moonlighter k, Shorties p){
-                double s = Math.sqrt( (k.x-p.x)*(k.x-p.x) + (k.y-p.y)*(k.y-p.y) );
+                double s = Math.sqrt( (k.getX()-p.getX())*(k.getX()-p.getX()) + (k.getY()-p.getY())*(k.getY()-p.getY()) );
                 if (s > 10 && s <= 50){
                     return ShortiesType.FAR;
                 }
@@ -74,9 +66,9 @@ public class Moonlighter extends Personage{
         int near = d.shortiesCountFar(this, p), far = d.shortiesCountNear(this, p), longAway = p.length - far - near;
 
         if (far > 0 || near > 0) {
-            System.out.println(this.name + " увидел " + ((far == 0) ? "вблизи " : "вдалеке ") + p.length + " коротышек.");
+            System.out.println(this.getName() + " увидел " + ((far == 0) ? "вблизи " : "вдалеке ") + p.length + " коротышек.");
         } else {
-            System.out.println(this.name + " не увидел " + "коротышек.");
+            System.out.println(this.getName() + " не увидел " + "коротышек.");
         }
         this.feel();
         for (int i = 0; i < p.length; ++i){
@@ -94,13 +86,13 @@ public class Moonlighter extends Personage{
             MessangeToInsects msg2 = new MessangeToInsects("Мало тебе двух миллионов? Три дам, чтоб тебе провалиться на месте!", "сказал", p, this);
             msg2.sayMessange();
 
-            if (p.skillSwear < this.skillSwear) {
+            if (p.skillSwear < this.getSkillSwear()) {
                 battle(p);
             }
         } catch (unchException e){
             System.out.println(e.getMessage());
         } catch (Exception e) {
-            System.out.println(this.name + " немой.");
+            System.out.println(this.getName() + " немой.");
         }
     }
 
@@ -112,20 +104,20 @@ public class Moonlighter extends Personage{
     public boolean battle(Flea p){
 
 
-        if (p.force >= this.force){
+        if (p.force >= this.getForce()){
             this.feel();
             p.fallByCollar(this);
             p.biteBack(this);
 
-            System.out.println(this.name + " не в силах расправиться с ничтожным " + p.name + "ом.");
-            if (this.mood != FURY){
+            System.out.println(this.getName() + " не в силах расправиться с ничтожным " + p.name + "ом.");
+            if (this.getMood() != FURY){
                 changeMood(FURY);
             }
             return true;
         }
         else {
-            System.out.println(this.name + " расправился с " + p.name + ".");
-            if (this.mood != HAPPY){
+            System.out.println(this.getName() + " расправился с " + p.name + ".");
+            if (this.getMood() != HAPPY){
                 changeMood(HAPPY);
             }
             return false;
@@ -139,23 +131,23 @@ public class Moonlighter extends Personage{
     public void changeMood(Mood newMood){
         switch (newMood){
             case NORMAL: {
-                System.out.println("У " + this.name + " снова пришел в норму.");
+                System.out.println("У " + this.getName() + " снова пришел в норму.");
                 break;
             }
             case SAD: {
-                System.out.println(this.name + " расстроился.");
+                System.out.println(this.getName() + " расстроился.");
                 break;
             }
             case FURY: {
-                System.out.println(this.name + " пришел в бешенство.");
+                System.out.println(this.getName() + " пришел в бешенство.");
                 break;
             }
             case HAPPY: {
-                System.out.println(this.name + " обрадовался.");
+                System.out.println(this.getName() + " обрадовался.");
                 break;
             }
             default: {
-                System.out.println("У " + this.name + " что-то случилось с настроением.");
+                System.out.println("У " + this.getName() + " что-то случилось с настроением.");
             }
         }
     }

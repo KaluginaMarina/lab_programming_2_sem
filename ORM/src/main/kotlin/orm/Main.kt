@@ -1,9 +1,11 @@
-import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner
+package orm
+
 import java.lang.IllegalArgumentException
 import java.sql.DriverManager
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.concurrent.ConcurrentLinkedDeque
+import kotlin.reflect.KProperty
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.declaredMembers
 import kotlin.reflect.jvm.javaType
@@ -11,7 +13,11 @@ import kotlin.reflect.jvm.javaType
 annotation class Table(val name: String)
 
 @Table("Personages")
-data class Personage(val name: String?, val date: LocalDateTime, @PrimaryKey val id: Int)
+data class Personage(val name: String?, val date: LocalDateTime, @PrimaryKey val id: Int) {
+    fun setMood(s: String): Boolean {
+        return true
+    }
+}
 
 @Target(AnnotationTarget.PROPERTY)
 annotation class PrimaryKey()
@@ -40,9 +46,9 @@ class Repository(url : String, username : String, password : String){
         return null
     }
 
-    inline fun <reified T> createTable(){
+    inline fun <reified T : Any> createTable(){
         val tableName = T::class.annotations.find { it is Table }?.let { (it as Table).name } ?: throw IllegalArgumentException("Аргументом должна быть таблица")
-        val str = T::class.declaredMembers.map { it.name + " " + convert(it.returnType.javaType.typeName) + if (it.annotations.any { it is PrimaryKey }) " primary key" else "" + if (it.returnType.isMarkedNullable) "" else " not null"}
+        val str = T::class.java.kotlin.declaredMemberProperties.filter { it is KProperty<*> }.map { it.name + " " + convert(it.returnType.javaType.typeName) + if (it.annotations.any { it is PrimaryKey }) " primary key" else "" + if (it.returnType.isMarkedNullable) "" else " not null"}
         connection.createStatement().executeUpdate("create table " + tableName + "( " + str.joinToString(",") + ")")
     }
 
@@ -96,13 +102,11 @@ class Repository(url : String, username : String, password : String){
         val statement = connection.prepareStatement("delete from " + tableName + " where " + field + "=" + id)
         statement.executeUpdate()
     }
-
-
 }
 
 fun main(args: Array<String>) {
     val repository = Repository("jdbc:postgresql://localhost:5432/db", "marina", "1234")
-//    repository.createTable<Personage>()
+    repository.createTable<Personage>()
 //    repository.insert(Personage("qwerty", LocalDateTime.now(), 1))
 //    repository.insert(Personage("12345", LocalDateTime.now(), 2))
     println(repository.findByPK<Personage>(1))
