@@ -127,8 +127,4 @@ open class Personage(
         }
         return true
     }
-
-    fun setCreateDate(date: LocalDateTime) {
-        dateCreate = date
-    }
 }

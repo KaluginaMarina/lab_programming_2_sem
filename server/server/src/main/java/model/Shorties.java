@@ -7,7 +7,7 @@ import java.util.Date;
 public class Shorties extends Personage {
 
     public Shorties (String name, double x, double y, int height){
-        super( "Лунатик", name, x, y, 3, height, 5, Mood.NORMAL, LocalDateTime.now(
+        super( "Коротышка", name, x, y, 3, height, 5, Mood.NORMAL, LocalDateTime.now(
 
         ));
     }

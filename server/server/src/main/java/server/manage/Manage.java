@@ -18,12 +18,10 @@ public class Manage implements Runnable{
             } else if (command.equals("help")){
                 System.out.println("Доступные команды: print, info, load, help, exit");
             } else if(command.equals("print")) {
-                System.out.println(Command.heroes);
-            } else if(command.equals("info")) {
-                System.out.println(Command.info());
+                System.out.println(Command.INSTANCE.getHeroes());
             } else if (command.equals("load")){
-                Command.load();
-                System.out.println(Command.heroes);
+                Command.INSTANCE.load();
+                System.out.println(Command.INSTANCE.getHeroes());
             } else {
                 System.out.println("Неверная команда.");
             }

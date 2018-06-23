@@ -19,7 +19,6 @@ public class Server implements Runnable{
 
     @Override
     public void run() {
-        Command cm = new Command();
         try /*(ServerSocket serverSocket = new ServerSocket(8080))*/ {
             //Socket client = serverSocket.accept();
             System.out.println("**Connection accepted.");

@@ -1,9 +1,11 @@
 package server.gui
 
+import manage.Command
 import model.*
 import java.awt.Color
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
+import java.time.LocalDateTime
 import javax.swing.*
 
 class PersonageChange(gui : GUI) : JComponent(){
@@ -146,35 +148,32 @@ class PersonageChange(gui : GUI) : JComponent(){
 
         removeButton.addActionListener{
             dropThisPerson()
-            gui.tree.refresh()
         }
 
         addButton.addActionListener{
             addThisPerson()
-            gui.tree.refresh()
         }
 
         changeButton.addActionListener{
             changePersonage(gui.tree.selectedPersonage)
-            gui.tree.refresh()
         }
     }
 
     fun dropThisPerson(){
         if(!check()) return
-        manage.Command.remove(createPers())
+        Command.remove(createPers())
         removeColor()
     }
 
     fun addThisPerson(){
         if (!check()) return
-        manage.Command.add(createPers())
+        Command.add(createPers())
         removeColor()
     }
 
     fun changePersonage(pers : Personage?){
         if(!check()) return
-        manage.Command.remove(pers)
+        Command.remove(pers)
         addThisPerson()
         removeColor()
     }
@@ -251,7 +250,7 @@ class PersonageChange(gui : GUI) : JComponent(){
         furyMoodRadioButton.isSelected = false
     }
 
-    fun createPers() : Personage? {
+    fun createPers() : Personage {
         val x = xPointSpinner.model.value as Double
         val y = yPointSpinner.model.value as Double
         val h = hightSpinner.value as Int
@@ -276,6 +275,6 @@ class PersonageChange(gui : GUI) : JComponent(){
             reader.mood = moodValue()
             return reader
         }
-        return null
+        return Personage("NoName", "Noname", 1.0, 1.0, 1, 1, 1, Mood.NORMAL, LocalDateTime.now())
     }
 }

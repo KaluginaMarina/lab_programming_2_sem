@@ -1,6 +1,10 @@
 package model;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import static model.Mood.*;
@@ -14,14 +18,7 @@ public class Moonlighter extends Personage{
     }
 
     public Moonlighter (String name, double x, double y, int height){
-        this.name = name;
-        this.type = "Лунатик";
-        this.x = x;
-        this.y =y;
-        this.force = 7;
-        this.height = height;
-        this.skillSwear = 10;
-
+        super("Лунатик", name, x, y, 7, height,  Mood.NORMAL, LocalDateTime.now());
     }
 
     /**

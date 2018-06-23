@@ -1,6 +1,7 @@
 package server.gui
 
 import authorization.AutorizationGUI
+import manage.Command
 import javax.swing.JMenu
 import javax.swing.JMenuItem
 
@@ -8,14 +9,13 @@ class Menu(gui : GUI) : JMenu("Меню"){
     init {
         val loadItem = JMenuItem("Обновить коллекцию с файла")
         loadItem.addActionListener{
-            manage.Command.load()
-            gui.tree.refresh()
+            Command.load()
         }
         add(loadItem)
 
         val saveItem = JMenuItem("Сохрaнить коллекцию в файл")
         saveItem.addActionListener{
-            manage.Command.collectionSave()
+            Command.collectionSave()
         }
         add(saveItem)
 

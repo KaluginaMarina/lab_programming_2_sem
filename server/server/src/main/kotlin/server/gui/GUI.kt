@@ -7,9 +7,9 @@ import java.util.concurrent.ConcurrentLinkedDeque
 import javax.swing.JFrame
 import javax.swing.JMenuBar
 
-class GUI(heroes : ConcurrentLinkedDeque<Personage>) : JFrame("SERVER"){
+class GUI() : JFrame("SERVER"){
     var personageChange =  PersonageChange(this)
-    var tree = PersonageTree(heroes, personageChange)
+    var tree = PersonageTree(personageChange)
     init {
         bounds = Rectangle(400, 100, 550, 400)
         defaultCloseOperation = JFrame.EXIT_ON_CLOSE

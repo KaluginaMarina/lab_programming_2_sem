@@ -1,18 +1,13 @@
 package model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Shorties extends Personage {
 
     public Shorties (String name, double x, double y, int height){
-        this.name = name;
-        this.type = "Коротышка";
-        this.x = x;
-        this.y = y;
-        this.force = 5;
-        this.height = height;
-        this.skillSwear = 3;
+        super( "Коротышка", name, x, y, 3, height, Mood.NORMAL, LocalDateTime.now());
     }
 
     /**
@@ -39,10 +34,10 @@ public class Shorties extends Personage {
         Cometo xy = new Cometo(){
             @Override
             public double coordinate(Personage who, Personage where){
-                if (who.x - where.x < 0){
+                if (who.x - where.y < 0){
                     return where.x + Math.random()*10;
                 }
-                else if (who.x - where.x > 0){
+                else if (who.x - where.y > 0){
                     return where.x - Math.random()*10;
                 }
                 else {
@@ -50,8 +45,8 @@ public class Shorties extends Personage {
                 }
             }
         };
-        this.x = xy.coordinate(this, p);
-        this.y = xy.coordinate(this, p);
+        this.x = (xy.coordinate(this, p));
+        this.y = (xy.coordinate(this, p));
         System.out.println("Какой-то " + this.type + " подошел к " + p.name + ".");
     }
 
@@ -59,8 +54,8 @@ public class Shorties extends Personage {
      * Коротышка скрылся за деревом
      */
     public void goForThree(Tree t){
-        this.x = t.x;
-        this.y = t.y;
+        this.x = (t.x);
+        this.y = (t.y);
         System.out.println(this.type + " скрылся за " + t.name + ".");
     }
 }

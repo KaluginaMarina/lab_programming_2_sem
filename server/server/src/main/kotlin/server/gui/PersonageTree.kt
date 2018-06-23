@@ -1,5 +1,6 @@
 package server.gui
 
+import manage.Command
 import model.Personage
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
@@ -8,7 +9,7 @@ import javax.swing.JTree
 import javax.swing.tree.DefaultMutableTreeNode
 import javax.swing.tree.DefaultTreeModel
 
-class PersonageTree(heroes : ConcurrentLinkedDeque<Personage>, guiPersonageChange: PersonageChange) : JTree(getTreeModel()) {
+class PersonageTree(guiPersonageChange: PersonageChange) : JTree(getTreeModel()) {
 
     var selectedPersonage: Personage?
 
@@ -25,8 +26,8 @@ class PersonageTree(heroes : ConcurrentLinkedDeque<Personage>, guiPersonageChang
         }
 
     }
+
     init {
-        refresh()
         selectedPersonage = null
         addMouseListener(object : MouseAdapter(){
             override fun mousePressed(e: MouseEvent) {
@@ -63,6 +64,7 @@ class PersonageTree(heroes : ConcurrentLinkedDeque<Personage>, guiPersonageChang
                 }
             }
         })
+        Command.setJTreeUpdate { refresh() }
     }
 
     fun refresh(){
@@ -70,12 +72,11 @@ class PersonageTree(heroes : ConcurrentLinkedDeque<Personage>, guiPersonageChang
         (root[0] as DefaultMutableTreeNode).removeAllChildren()
         (root[1] as DefaultMutableTreeNode).removeAllChildren()
         (root[2] as DefaultMutableTreeNode).removeAllChildren()
-        manage.Command.heroes.forEach{
+        Command.heroes.forEach{
             when (it.type) {
                 "Коротышка" -> (root[0] as DefaultMutableTreeNode).add(DefaultMutableTreeNode(it, false))
                 "Лунатик" -> (root[1] as DefaultMutableTreeNode).add(DefaultMutableTreeNode(it, false))
                 "Читатель" -> (root[2] as DefaultMutableTreeNode).add(DefaultMutableTreeNode(it, false))
-                "Персонаж" -> (model.root as DefaultMutableTreeNode).add(DefaultMutableTreeNode(it, false))
             }
         }
         (model as DefaultTreeModel).reload()

@@ -75,7 +75,7 @@ class Repository(url : String, username : String, password : String){
         statement.executeUpdate()
     }
 
-    inline fun <reified T> selectAll() : ConcurrentLinkedDeque<T>?{
+    inline fun <reified T> selectAll() : ConcurrentLinkedDeque<T>{
         val tableName = T::class.annotations.find { it is Table }?.let { (it as Table).name } ?: throw IllegalArgumentException("Аргументом должна быть таблица")
         val statement = connection.prepareStatement("select * from " + tableName)
         val res = statement.executeQuery()
@@ -88,7 +88,7 @@ class Repository(url : String, username : String, password : String){
                 else when (it.type.javaType.typeName){
                     "java.lang.String" -> res.getString(it.name)
                     "java.time.LocalDateTime" -> {
-                        LocalDateTime.parse(res.getString(it.name), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                        LocalDateTime.parse(res.getString(it.name), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"))
                     }
                     "int" -> res.getInt(it.name)
                     else -> res.getObject(it.name)

@@ -5,9 +5,7 @@ import client.util.CommandType;
 
 import java.io.*;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.NoSuchElementException;
-
 
 public class Answer extends Thread {
     private client.util.Command command;
@@ -24,30 +22,16 @@ public class Answer extends Thread {
             DataOutputStream out = new DataOutputStream(client.getOutputStream());
             ObjectOutputStream oos = new ObjectOutputStream(out);
 
-            if (command.commandType == CommandType.REMOVE_LAST) {
-                Command.removeLast();
-                oos.writeObject(Command.heroes);
-            } else if (command.commandType ==  CommandType.LOAD) {
-                Command.load();
-                oos.writeObject(Command.heroes);
-            } else if (command.commandType == CommandType.INFO) {
-                oos.writeObject(Command.info());
-            } else if (command.commandType == CommandType.REMOVE_GREATER) {
-                Command.remove_greater(command.personage);
-                oos.writeObject(Command.heroes);
-            } else if (command.commandType == CommandType.ADD_IF_MAX) {
-                Command.addIf("add_if_max", command.personage);
-                oos.writeObject(Command.heroes);
-            } else if (command.commandType == CommandType.ADD_IF_MIN) {
-                Command.addIf("add_if_min", command.personage);
-                oos.writeObject(Command.heroes);
+            if (command.commandType ==  CommandType.LOAD) {
+                Command.INSTANCE.load();
+                oos.writeObject(Command.INSTANCE.getHeroes());
             } else if (command.commandType == CommandType.ADD) {
-                Command.add(command.personage);
-                oos.writeObject(Command.heroes);
+                Command.INSTANCE.add(command.personage);
+                oos.writeObject(Command.INSTANCE.getHeroes());
             } else if (command.commandType == CommandType.PRINT) {
-                oos.writeObject(Command.heroes);
+                oos.writeObject(Command.INSTANCE.getHeroes());
             } else if (command.commandType == CommandType.QUIT){
-                oos.writeObject(Command.heroes);
+                oos.writeObject(Command.INSTANCE.getHeroes());
                 oos.flush();
                 out.flush();
                 return;
@@ -56,7 +40,7 @@ public class Answer extends Thread {
                 out.flush();
             }
             else {
-                oos.writeObject(Command.heroes);
+                oos.writeObject(Command.INSTANCE.getHeroes());
                 System.out.println("Команда не найдена.\nhelp / ?: открыть справку");
             }
             oos.flush();
@@ -67,6 +51,5 @@ public class Answer extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }

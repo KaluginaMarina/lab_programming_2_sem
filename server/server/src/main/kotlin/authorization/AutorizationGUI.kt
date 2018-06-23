@@ -27,7 +27,7 @@ class AutorizationGUI : JFrame("Авторизация"){
             }
             if (check) {
                 this@AutorizationGUI.isVisible = false
-                GUI(Command.heroes)
+                GUI()
                 dispose()
             } else {
                 loginTextFiled.background = Color(255, 156, 140)

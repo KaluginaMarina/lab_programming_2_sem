@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-public abstract class Personage implements Comparable<Personage>, Serializable{
+public class Personage implements Comparable<Personage>, Serializable{
     public String name = "NoName";
     public String type = "Персонаж";
     public double x = 0;
