@@ -91,8 +91,9 @@ public class ClientGUI extends JFrame{
         toLabel.setForeground(Color.darkGray);
         onlyLetterCheckBox = new JCheckBox("", false);
 
+        ManageCollection manageCollection = new ManageCollection();
         //Код для power filter
-        int maxPower = ManageCollection.maxPower(client.getHeroes());
+        int maxPower = manageCollection.maxPower(client.getHeroes());
         SpinnerNumberModel powerFromSpinnerModel = new SpinnerNumberModel(0, 0, maxPower, 1);
         SpinnerNumberModel powerToSpinnerModel = new SpinnerNumberModel(maxPower, 0, maxPower,1);
         powerFromSpinner = new JSpinner(powerFromSpinnerModel);
@@ -117,7 +118,7 @@ public class ClientGUI extends JFrame{
         moodFuryCheckBox.setBackground(new Color(255, 153, 153));
 
         //кучка кода для height filter
-        int maxHeight = ManageCollection.maxHeight(client.getHeroes());
+        int maxHeight = manageCollection.maxHeight(client.getHeroes());
         this.heightFromTextField = new JTextField("0");
         heightFromTextField.setHorizontalAlignment(JTextField.RIGHT);
         this.heightToTextField = new JTextField(Integer.toString(maxHeight));
@@ -131,7 +132,7 @@ public class ClientGUI extends JFrame{
         startButton = new JButton();
         startButton.setBackground(Color.red);
         startButton.setForeground(Color.white);
-        startbutton = new StartButton(this, ManageCollection.maxHeight(client.getHeroes()), client, locale);
+        startbutton = new StartButton(this, manageCollection.maxHeight(client.getHeroes()), client, locale);
         startButton.addActionListener(startbutton);
 
         //Кучка необходимого кода

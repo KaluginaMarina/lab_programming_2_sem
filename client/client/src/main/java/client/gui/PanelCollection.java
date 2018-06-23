@@ -16,6 +16,7 @@ public class PanelCollection extends JPanel {
     private ClientGUI clientGUI;
     private StartButton startButton;
     private Graphics2D gg;
+    private ManageCollection manageCollection = new ManageCollection();
 
     int ox;
     int oy;
@@ -28,6 +29,7 @@ public class PanelCollection extends JPanel {
     ArrayList<Personage> heroesList;
     ArrayList<Ellipse> ellipses = new ArrayList<>();
     Mouse mouse;
+
 
     public PanelCollection(ConcurrentLinkedDeque<Personage> heroes, ClientGUI clientGUI, StartButton startButton){
         this.heroes = heroes;
@@ -42,7 +44,7 @@ public class PanelCollection extends JPanel {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
 
-        coef = (clientGUI.getHeight() - 100)/(20*(ManageCollection.maxHeight(heroes) - ManageCollection.minHeight(heroes)));
+        coef = (clientGUI.getHeight() - 100)/(20*(manageCollection.maxHeight(heroes) - manageCollection.minHeight(heroes)));
         x = 50;
         y = 40;
         int h = Math.min(clientGUI.getHeight() - 2*y, clientGUI.getWidth() / 2 - 2*x); // height
@@ -59,10 +61,10 @@ public class PanelCollection extends JPanel {
         g.drawLine(x+h, y, x+h, y+h);
 
         //oпределение границ
-        top = (int)(ManageCollection.maxY(heroes) < 0 ? 0 : ManageCollection.maxY(heroes) + (ManageCollection.maxHeight(heroes)*coef)/2 + 1);
-        bottom = (int) (ManageCollection.minY(heroes) > 0 ? 0 : ManageCollection.minY(heroes) - (ManageCollection.maxHeight(heroes)*coef)/2 - 1 );
-        right = (int) (ManageCollection.maxX(heroes) < 0 ? 0 : ManageCollection.maxX(heroes) + (ManageCollection.maxHeight(heroes)*coef)/2 + 1);
-        left = (int) (ManageCollection.minX(heroes) > 0 ? 0 : ManageCollection.minX(heroes) - (ManageCollection.maxHeight(heroes)*coef)/2 - 1);
+        top = (int)(manageCollection.maxY(heroes) < 0 ? 0 : manageCollection.maxY(heroes) + (manageCollection.maxHeight(heroes)*coef)/2 + 1);
+        bottom = (int) (manageCollection.minY(heroes) > 0 ? 0 : manageCollection.minY(heroes) - (manageCollection.maxHeight(heroes)*coef)/2 - 1 );
+        right = (int) (manageCollection.maxX(heroes) < 0 ? 0 : manageCollection.maxX(heroes) + (manageCollection.maxHeight(heroes)*coef)/2 + 1);
+        left = (int) (manageCollection.minX(heroes) > 0 ? 0 : manageCollection.minX(heroes) - (manageCollection.maxHeight(heroes)*coef)/2 - 1);
 
 
         //координатные оси

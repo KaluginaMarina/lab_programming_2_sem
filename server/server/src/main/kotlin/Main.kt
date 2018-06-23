@@ -1,7 +1,6 @@
 import authorization.AutorizationGUI
 import manage.Command
 import server.Server
-import server.manage.Manage
 import java.net.ServerSocket
 import java.util.concurrent.Executors
 
@@ -9,10 +8,6 @@ import java.util.concurrent.Executors
 var executeIt = Executors.newFixedThreadPool(2)
 
 fun main(args: Array<String>) {
-
-    val manage = Manage()
-    val manager = Thread(manage)
-    manager.start()
 
     Runtime.getRuntime().addShutdownHook(Thread { Command.collectionSave() })
 
