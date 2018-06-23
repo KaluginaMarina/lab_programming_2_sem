@@ -49,13 +49,4 @@ public class Shorties extends Personage {
         this.setY(xy.coordinate(this, p));
         System.out.println("Какой-то " + this.getType() + " подошел к " + p.getName() + ".");
     }
-
-    /**
-     * Коротышка скрылся за деревом
-     */
-    public void goForThree(Tree t){
-        this.setX(t.x);
-        this.setY(t.y);
-        System.out.println(this.getType() + " скрылся за " + t.name + ".");
-    }
 }

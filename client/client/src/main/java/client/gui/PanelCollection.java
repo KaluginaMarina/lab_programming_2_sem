@@ -90,7 +90,7 @@ public class PanelCollection extends JPanel {
         c.addAll(heroes);
         while (!c.isEmpty()) {
             Personage p = c.removeFirst();
-            Ellipse e = new Ellipse(p, p.x * ox + x + Math.abs(left * ox) - (p.height * coef + 12) / 2, y + top * oy - p.y * oy - (p.height * coef + 12) / 2, p.height * coef + 10, this);
+            Ellipse e = new Ellipse(p, p.getX() * ox + x + Math.abs(left * ox) - (p.getHeight() * coef + 12) / 2, y + top * oy - p.getY() * oy - (p.getHeight() * coef + 12) / 2, p.getHeight() * coef + 10, this);
             boolean check = false;
             for (int j = 0; j < ellipses.size(); ++j) {
                 if (ellipses.get(j).equals(e)) {
@@ -134,7 +134,7 @@ public class PanelCollection extends JPanel {
             Color color1;
             Color color2;
             gg.setColor(Color.gray);
-            switch (ellipses.get(j).personage.mood){
+            switch (ellipses.get(j).personage.getMood()){
                 case FURY: {
                     color1 = new Color(255, 153, 153);
                     color2 = Color.red;
@@ -160,9 +160,9 @@ public class PanelCollection extends JPanel {
                     color2 = Color.BLACK;
                 }
             }
-            gg.fill(new Ellipse2D.Double(ellipses.get(j).personage.x * ox + x + Math.abs(left * ox) - (ellipses.get(j).widthNow * coef + 12) / 2, -ellipses.get(j).personage.y * oy + y + top * oy - (ellipses.get(j).widthNow * coef + 12) / 2, ellipses.get(j).widthNow * coef + 12, ellipses.get(j).widthNow * coef + 12));
-            gg.setPaint(new GradientPaint((int) (ellipses.get(j).personage.x * ox + x + Math.abs(left * ox) - (ellipses.get(j).widthNow * coef + 12) / 2), (int) ((-ellipses.get(j).personage.y * oy + y + top * oy - (ellipses.get(j).personage.height * coef + 12) / 2)), color1, (int) (ellipses.get(j).personage.x * ox + x + Math.abs(left * ox + ellipses.get(j).widthNow * coef + 12) - (ellipses.get(j).widthNow * coef + 12) / 2), (int) (-ellipses.get(j).personage.y * oy + y + top * oy - (ellipses.get(j).widthNow * coef + 12) / 2), color2));
-            gg.fill(new Ellipse2D.Double(ellipses.get(j).personage.x * ox + x + Math.abs(left * ox) - (ellipses.get(j).widthNow * coef + 12) / 2, y + top * oy - ellipses.get(j).personage.y * oy - (ellipses.get(j).widthNow * coef + 12) / 2, ellipses.get(j).widthNow * coef + 10, ellipses.get(j).widthNow * coef+ 10));
+            gg.fill(new Ellipse2D.Double(ellipses.get(j).personage.getX() * ox + x + Math.abs(left * ox) - (ellipses.get(j).widthNow * coef + 12) / 2, -ellipses.get(j).personage.getY() * oy + y + top * oy - (ellipses.get(j).widthNow * coef + 12) / 2, ellipses.get(j).widthNow * coef + 12, ellipses.get(j).widthNow * coef + 12));
+            gg.setPaint(new GradientPaint((int) (ellipses.get(j).personage.getX() * ox + x + Math.abs(left * ox) - (ellipses.get(j).widthNow * coef + 12) / 2), (int) ((-ellipses.get(j).personage.getY() * oy + y + top * oy - (ellipses.get(j).personage.getHeight() * coef + 12) / 2)), color1, (int) (ellipses.get(j).personage.getX() * ox + x + Math.abs(left * ox + ellipses.get(j).widthNow * coef + 12) - (ellipses.get(j).widthNow * coef + 12) / 2), (int) (-ellipses.get(j).personage.getY() * oy + y + top * oy - (ellipses.get(j).widthNow * coef + 12) / 2), color2));
+            gg.fill(new Ellipse2D.Double(ellipses.get(j).personage.getX() * ox + x + Math.abs(left * ox) - (ellipses.get(j).widthNow * coef + 12) / 2, y + top * oy - ellipses.get(j).personage.getY() * oy - (ellipses.get(j).widthNow * coef + 12) / 2, ellipses.get(j).widthNow * coef + 10, ellipses.get(j).widthNow * coef+ 10));
 
             //подписи к персонажам
             g.setColor(Color.darkGray);

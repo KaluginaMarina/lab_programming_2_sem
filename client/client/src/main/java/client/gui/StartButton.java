@@ -135,40 +135,40 @@ public class StartButton implements ActionListener{
                 heroesFilter = client.getHeroes();
                 //фильтр по type
                 heroesFilter = heroesFilter.stream()
-                        .filter(x -> (x.type.equals("Коротышка") && gui.typeShortiesCheckBox.isSelected()) ||
-                                     (x.type.equals("Лунатик") && gui.typeMoonlighterCheckBox.isSelected()) ||
-                                     (x.type.equals("Читатель") && gui.typeReaderCheckBox.isSelected()))
+                        .filter(x -> (x.getType().equals("Коротышка") && gui.typeShortiesCheckBox.isSelected()) ||
+                                     (x.getType().equals("Лунатик") && gui.typeMoonlighterCheckBox.isSelected()) ||
+                                     (x.getType().equals("Читатель") && gui.typeReaderCheckBox.isSelected()))
                         .collect(Collectors.toCollection(ConcurrentLinkedDeque::new));
 
                 //фильтр по mood
                 heroesFilter = heroesFilter.stream()
-                        .filter(x -> (x.mood.equals(Mood.HAPPY) && gui.moodHappyCheckBox.isSelected()) ||
-                                     (x.mood.equals(Mood.NORMAL) && gui.moodNormalCheckBox.isSelected()) ||
-                                     (x.mood.equals(Mood.SAD) && gui.moodSadCheckBox.isSelected()) ||
-                                     (x.mood.equals(Mood.FURY) && gui.moodFuryCheckBox.isSelected()))
+                        .filter(x -> (x.getMood().equals(Mood.HAPPY) && gui.moodHappyCheckBox.isSelected()) ||
+                                     (x.getMood().equals(Mood.NORMAL) && gui.moodNormalCheckBox.isSelected()) ||
+                                     (x.getMood().equals(Mood.SAD) && gui.moodSadCheckBox.isSelected()) ||
+                                     (x.getMood().equals(Mood.FURY) && gui.moodFuryCheckBox.isSelected()))
                         .collect(Collectors.toCollection(ConcurrentLinkedDeque::new));
 
                 //фильтр по height
                 heroesFilter = heroesFilter.stream()
-                        .filter(x -> x.height >= Integer.parseInt(gui.heightFromTextField.getText()) &&
-                                     x.height <= Integer.parseInt(gui.heightToTextField.getText()))
+                        .filter(x -> x.getHeight() >= Integer.parseInt(gui.heightFromTextField.getText()) &&
+                                     x.getHeight() <= Integer.parseInt(gui.heightToTextField.getText()))
                         .collect(Collectors.toCollection(ConcurrentLinkedDeque::new));
 
                 //Фильтр по power
                 heroesFilter = heroesFilter.stream()
-                        .filter(x -> x.force >= (int)gui.powerFromSpinner.getValue() &&
-                                     x.force <= (int)gui.powerToSpinner.getValue())
+                        .filter(x -> x.getForce() >= (int)gui.powerFromSpinner.getValue() &&
+                                     x.getForce() <= (int)gui.powerToSpinner.getValue())
                         .collect(Collectors.toCollection(ConcurrentLinkedDeque::new));
 
                 //Фильтр по onlyLetter
                 heroesFilter = heroesFilter.stream()
-                        .filter(x -> Character.isLetter(x.name.charAt(0)) && !gui.onlyLetterCheckBox.isSelected())
+                        .filter(x -> Character.isLetter(x.getName().charAt(0)) && !gui.onlyLetterCheckBox.isSelected())
                         .collect(Collectors.toCollection(ConcurrentLinkedDeque::new));
 
                 //Фильтр по name
                 heroesFilter = heroesFilter.stream()
-                        .filter(x -> x.name.toUpperCase().charAt(0) >= gui.nameFromSpinner.getValue().toString().charAt(0) &&
-                                     x.name.toUpperCase().charAt(0) <= gui.nameToSpinner.getValue().toString().charAt(0))
+                        .filter(x -> x.getName().toUpperCase().charAt(0) >= gui.nameFromSpinner.getValue().toString().charAt(0) &&
+                                     x.getName().toUpperCase().charAt(0) <= gui.nameToSpinner.getValue().toString().charAt(0))
                         .collect(Collectors.toCollection(ConcurrentLinkedDeque::new));
                 //gui.panel.redraw();
                 for (int i = 0; i < gui.panel.ellipses.size(); ++i){

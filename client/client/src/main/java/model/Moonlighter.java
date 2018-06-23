@@ -1,6 +1,11 @@
 package model;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import static model.Mood.*;
 
@@ -13,14 +18,14 @@ public class Moonlighter extends Personage{
     }
 
     public Moonlighter (String name, double x, double y, int height){
-        super("Лунатик", name, x, y, 7, height,  Mood.NORMAL, LocalDateTime.now());
+        super("Лунатик", name, x, y, 7, height, 10, Mood.NORMAL, LocalDateTime.now(), 0);
     }
 
     /**
      *  Поднять голову
      */
     public void headUp() {
-        System.out.println(this.name + " поднял голову.");
+        System.out.println(this.getName() + " поднял голову.");
     }
 
     static enum ShortiesType{
@@ -36,7 +41,7 @@ public class Moonlighter extends Personage{
          */
         class Distance{
              private ShortiesType far(Moonlighter k, Shorties p){
-                double s = Math.sqrt( (k.x-p.x)*(k.x-p.x) + (k.y-p.y)*(k.y-p.y) );
+                double s = Math.sqrt( (k.getX()-p.getX())*(k.getX()-p.getX()) + (k.getY()-p.getY())*(k.getY()-p.getY()) );
                 if (s > 10 && s <= 50){
                     return ShortiesType.FAR;
                 }
@@ -64,61 +69,13 @@ public class Moonlighter extends Personage{
         int near = d.shortiesCountFar(this, p), far = d.shortiesCountNear(this, p), longAway = p.length - far - near;
 
         if (far > 0 || near > 0) {
-            System.out.println(this.name + " увидел " + ((far == 0) ? "вблизи " : "вдалеке ") + p.length + " коротышек.");
+            System.out.println(this.getName() + " увидел " + ((far == 0) ? "вблизи " : "вдалеке ") + p.length + " коротышек.");
         } else {
-            System.out.println(this.name + " не увидел " + "коротышек.");
+            System.out.println(this.getName() + " не увидел " + "коротышек.");
         }
         this.feel();
         for (int i = 0; i < p.length; ++i){
             p[i].compare(k);
-        }
-    }
-
-    public void tease (Flea p){
-        if (p == null){
-            throw new unchException("error");
-        }
-        try {
-            MessangeToInsects msg = new MessangeToInsects("Ах ты, зверюшка чертова!", "выругался", p, this);
-            msg.sayMessange();
-            MessangeToInsects msg2 = new MessangeToInsects("Мало тебе двух миллионов? Три дам, чтоб тебе провалиться на месте!", "сказал", p, this);
-            msg2.sayMessange();
-
-            if (p.skillSwear < this.skillSwear) {
-                battle(p);
-            }
-        } catch (unchException e){
-            System.out.println(e.getMessage());
-        } catch (Exception e) {
-            System.out.println(this.name + " немой.");
-        }
-    }
-
-    /**
-     * Битва Лунатика и Клопа
-     * @param p - Клоп
-     * @return true - Лунатик победил, false - иначе
-     */
-    public boolean battle(Flea p){
-
-
-        if (p.force >= this.force){
-            this.feel();
-            p.fallByCollar(this);
-            p.biteBack(this);
-
-            System.out.println(this.name + " не в силах расправиться с ничтожным " + p.name + "ом.");
-            if (this.mood != FURY){
-                changeMood(FURY);
-            }
-            return true;
-        }
-        else {
-            System.out.println(this.name + " расправился с " + p.name + ".");
-            if (this.mood != HAPPY){
-                changeMood(HAPPY);
-            }
-            return false;
         }
     }
 
@@ -129,23 +86,23 @@ public class Moonlighter extends Personage{
     public void changeMood(Mood newMood){
         switch (newMood){
             case NORMAL: {
-                System.out.println("У " + this.name + " снова пришел в норму.");
+                System.out.println("У " + this.getName() + " снова пришел в норму.");
                 break;
             }
             case SAD: {
-                System.out.println(this.name + " расстроился.");
+                System.out.println(this.getName() + " расстроился.");
                 break;
             }
             case FURY: {
-                System.out.println(this.name + " пришел в бешенство.");
+                System.out.println(this.getName() + " пришел в бешенство.");
                 break;
             }
             case HAPPY: {
-                System.out.println(this.name + " обрадовался.");
+                System.out.println(this.getName() + " обрадовался.");
                 break;
             }
             default: {
-                System.out.println("У " + this.name + " что-то случилось с настроением.");
+                System.out.println("У " + this.getName() + " что-то случилось с настроением.");
             }
         }
     }

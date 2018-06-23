@@ -24,8 +24,8 @@ public class CollectionCreater {
                 switch (type){
                     case "Читатель": {
                         Reader reader = new Reader(sc.next());
-                        reader.height = sc.nextInt();
-                        reader.force = sc.nextInt();
+                        reader.setHeight(sc.nextInt());
+                        reader.setForce(sc.nextInt());
                         if (!reader.setMood(sc.next())){
                             throw new Exception();
                         }
@@ -34,8 +34,8 @@ public class CollectionCreater {
                     }
                     case "Лунатик": {
                         Moonlighter moonlighter = new Moonlighter(sc.next(), sc.nextDouble(), sc.nextDouble(), sc.nextInt());
-                        moonlighter.skillSwear = sc.nextInt();
-                        moonlighter.force = sc.nextInt();
+                        moonlighter.setSkillSwear(sc.nextInt());
+                        moonlighter.setForce(sc.nextInt());
                         if (!moonlighter.setMood(sc.next())){
                             throw new Exception();
                         }
@@ -44,8 +44,8 @@ public class CollectionCreater {
                     }
                     case "Коротышка": {
                         Shorties shorties = new Shorties(sc.next(), sc.nextDouble(), sc.nextDouble(), sc.nextInt());
-                        shorties.skillSwear = sc.nextInt();
-                        shorties.force = sc.nextInt();
+                        shorties.setSkillSwear(sc.nextInt());
+                        shorties.setForce(sc.nextInt());
                         if (!shorties.setMood(sc.next())){
                             throw new Exception();
                         }

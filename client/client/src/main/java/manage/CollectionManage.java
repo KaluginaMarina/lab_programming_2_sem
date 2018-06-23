@@ -66,8 +66,8 @@ abstract class CollectionManage {
                 switch (type){
                     case "Читатель": {
                         Reader reader = new Reader(sc.next());
-                        reader.height = sc.nextInt();
-                        reader.force = sc.nextInt();
+                        reader.setHeight(sc.nextInt());
+                        reader.setForce(sc.nextInt());
                         if (!reader.setMood(sc.next())){
                             throw new Exception();
                         }
@@ -76,8 +76,8 @@ abstract class CollectionManage {
                     }
                     case "Лунатик": {
                         Moonlighter moonlighter = new Moonlighter(sc.next(), sc.nextDouble(), sc.nextDouble(), sc.nextInt());
-                        moonlighter.skillSwear = sc.nextInt();
-                        moonlighter.force = sc.nextInt();
+                        moonlighter.setSkillSwear(sc.nextInt());
+                        moonlighter.setForce(sc.nextInt());
                         if (!moonlighter.setMood(sc.next())){
                             throw new Exception();
                         }
@@ -86,8 +86,8 @@ abstract class CollectionManage {
                     }
                     case "Коротышка": {
                         Shorties shorties = new Shorties(sc.next(), sc.nextDouble(), sc.nextDouble(), sc.nextInt());
-                        shorties.skillSwear = sc.nextInt();
-                        shorties.force = sc.nextInt();
+                        shorties.setSkillSwear(sc.nextInt());
+                        shorties.setForce(sc.nextInt());
                         if (!shorties.setMood(sc.next())){
                             throw new Exception();
                         }
@@ -149,84 +149,8 @@ abstract class CollectionManage {
      */
     public String toSCV(){
         return heroes.stream()
-                .map(x -> ((x.type.equals("Читатель")) ? x.type + "," + x.name + "," + x.height  + "," + x.force + "," + x.mood + "\n" : x.type + "," + x.name + "," + x.x + "," + x.y + "," + x.height + "," + x.skillSwear + "," + x.force + "," + x.mood + "\n"))
+                .map(x -> ((x.getType().equals("Читатель")) ? x.getType() + "," + x.getName() + "," + x.getHeight()  + "," + x.getForce() + "," + x.getMood() + "\n" : x.getType() + "," + x.getName() + "," + x.getX() + "," + x.getY() + "," + x.getHeight() + "," + x.getSkillSwear() + "," + x.getForce() + "," + x.getMood() + "\n"))
                 .collect(Collectors.joining());
-    }
-
-    /**
-     * Считывает строку из консоли.
-     * Считывание происходит до тех пор, пока не встретится пустая строка
-     * @return String - считанная строка
-     */
-    String readPers(){
-        Scanner input = new Scanner(System.in);
-        String res = "";
-        String str = input.nextLine();
-        if(str.equals("\\s+")){
-            str = input.nextLine();
-        }
-        try{
-            while (!(str).equals("")){
-                res += str;
-                str = input.nextLine();
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-            return res;
-        };
-        return res;
-    }
-
-    /**
-     * Метод считывает героя в формате json и создает новый объект персонажа
-     * @param next строка, которая посылается пользователем непосредственно за командой (на той же строке)
-     * @return объект персонажа
-     */
-    Personage newPers(String next) {
-        try {
-            String heroesJson = readPers();
-            heroesJson = next + heroesJson;
-            if (heroesJson == null){
-                return null;
-            };
-            JSONParser parser = new JSONParser();
-            JSONObject ob = (JSONObject) parser.parse(heroesJson);
-            switch ((String)ob.get("type")) {
-                case "Читатель": {
-                    Reader reader = new Reader((String) ob.get("name"));
-                    reader.height = toIntExact((long) ob.get("height"));
-                    reader.force = toIntExact((long) ob.get("force"));
-                    if(!reader.setMood((String) ob.get("mood"))){
-                        throw new Exception();
-                    }
-                    return reader;
-                }
-                case "Лунатик": {
-                    Moonlighter moonlighter = new Moonlighter((String) ob.get("name"), (double) ob.get("x"), (double) ob.get("y"), toIntExact((long) ob.get("height")));
-                    moonlighter.skillSwear =  toIntExact((long) ob.get("skillSwear"));
-                    moonlighter.force =  toIntExact((long) ob.get("force"));
-                    if(!moonlighter.setMood((String) ob.get("mood"))){
-                        throw new Exception();
-                    }
-                    return moonlighter;
-                }
-                case "Коротышка": {
-                    Shorties shorties = new Shorties((String) ob.get("name"), (double) ob.get("x"), (double) ob.get("y"), toIntExact((long) ob.get("height")));
-                    shorties.skillSwear =  toIntExact((long) ob.get("skillSwear"));
-                    shorties.force =  toIntExact((long) ob.get("force"));
-                    if(!shorties.setMood((String) ob.get("mood"))){
-                        throw new Exception();
-                    }
-                    return shorties;
-                }
-                default: {
-                    throw new Exception();
-                }
-            }
-        } catch (Exception e){
-            System.out.println("Объект должен быть формата json или введено некорректное представление объекта.");
-            return null;
-        }
     }
 
     /**

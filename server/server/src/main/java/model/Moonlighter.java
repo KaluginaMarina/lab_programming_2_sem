@@ -79,54 +79,6 @@ public class Moonlighter extends Personage{
         }
     }
 
-    public void tease (Flea p){
-        if (p == null){
-            throw new unchException("error");
-        }
-        try {
-            MessangeToInsects msg = new MessangeToInsects("Ах ты, зверюшка чертова!", "выругался", p, this);
-            msg.sayMessange();
-            MessangeToInsects msg2 = new MessangeToInsects("Мало тебе двух миллионов? Три дам, чтоб тебе провалиться на месте!", "сказал", p, this);
-            msg2.sayMessange();
-
-            if (p.skillSwear < this.getSkillSwear()) {
-                battle(p);
-            }
-        } catch (unchException e){
-            System.out.println(e.getMessage());
-        } catch (Exception e) {
-            System.out.println(this.getName() + " немой.");
-        }
-    }
-
-    /**
-     * Битва Лунатика и Клопа
-     * @param p - Клоп
-     * @return true - Лунатик победил, false - иначе
-     */
-    public boolean battle(Flea p){
-
-
-        if (p.force >= this.getForce()){
-            this.feel();
-            p.fallByCollar(this);
-            p.biteBack(this);
-
-            System.out.println(this.getName() + " не в силах расправиться с ничтожным " + p.name + "ом.");
-            if (this.getMood() != FURY){
-                changeMood(FURY);
-            }
-            return true;
-        }
-        else {
-            System.out.println(this.getName() + " расправился с " + p.name + ".");
-            if (this.getMood() != HAPPY){
-                changeMood(HAPPY);
-            }
-            return false;
-        }
-    }
-
     /**
      * Метод, который меняет настроение
      * @param newMood - новое настроение персонажа

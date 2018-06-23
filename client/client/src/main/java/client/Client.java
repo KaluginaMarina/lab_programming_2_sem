@@ -60,7 +60,7 @@ public class Client implements Runnable{
                     heroes = tmp;
                     //System.out.println(heroes);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    System.out.println("Ошибка при передаче объекта");
                 }
                 synchronized (this) {wait(5000);}
             }

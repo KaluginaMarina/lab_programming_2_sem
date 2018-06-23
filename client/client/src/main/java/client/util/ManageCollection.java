@@ -10,7 +10,7 @@ public class ManageCollection {
         c.addAll(heroes);
         int res = 0;
         while (!c.isEmpty()) {
-            int tmp = c.removeFirst().force;
+            int tmp = c.removeFirst().getForce();
             if (tmp > res) {
                 res = tmp;
             }
@@ -23,7 +23,7 @@ public class ManageCollection {
         c.addAll(heroes);
         int res = 0;
         while (!c.isEmpty()) {
-            int tmp = c.removeFirst().height;
+            int tmp = c.removeFirst().getHeight();
             if (tmp > res) {
                 res = tmp;
             }
@@ -39,7 +39,7 @@ public class ManageCollection {
         }
         double res = Double.MIN_VALUE;
         while (!c.isEmpty()) {
-            double tmp = c.removeFirst().x;
+            double tmp = c.removeFirst().getX();
             if (tmp > res) {
                 res = tmp;
             }
@@ -55,7 +55,7 @@ public class ManageCollection {
         }
         double res = Double.MAX_VALUE;
         while (!c.isEmpty()) {
-            double tmp = c.removeFirst().x;
+            double tmp = c.removeFirst().getX();
             if (tmp < res) {
                 res = tmp;
             }
@@ -71,7 +71,7 @@ public class ManageCollection {
         }
         double res = Double.MIN_VALUE;
         while (!c.isEmpty()) {
-            double tmp = c.removeFirst().y;
+            double tmp = c.removeFirst().getY();
             if (tmp > res) {
                 res = tmp;
             }
@@ -87,7 +87,7 @@ public class ManageCollection {
         }
         double res = Double.MAX_VALUE;
         while (!c.isEmpty()){
-            double tmp = c.removeFirst().y;
+            double tmp = c.removeFirst().getY();
             if (tmp < res){
                 res = tmp;
             }
@@ -103,7 +103,7 @@ public class ManageCollection {
         }
         double res = Double.MAX_VALUE;
         while (!c.isEmpty()){
-            double tmp = c.removeFirst().height;
+            double tmp = c.removeFirst().getHeight();
             if (tmp < res){
                 res = tmp;
             }
