@@ -1,9 +1,13 @@
 import authorization.AutorizationGUI
+import com.sun.org.omg.CORBA.Repository
 import manage.Command
+import model.Mood
+import model.Personage
 import server.manage.Manage
 import server.Server
 
 import java.net.ServerSocket
+import java.time.LocalDateTime
 import java.util.concurrent.Executors
 
 
@@ -15,14 +19,13 @@ fun main(args: Array<String>) {
     val manager = Thread(manage)
     manager.start()
 
-
     Runtime.getRuntime().addShutdownHook(Thread { Command.collectionSave() })
 
+    val repository = orm.Repository("jdbc:postgresql://localhost:5432/db", "marina", "1234")
+    //repository.createTable<Personage>()
+
     Command.collectionCreater()
-
     var gui = AutorizationGUI()
-
-    Command.load()
 
     println("Сервер начал работу.")
     try {

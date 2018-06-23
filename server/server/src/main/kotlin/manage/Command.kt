@@ -31,6 +31,8 @@ object Command {
      */
     fun add(pers: Personage){
         heroes.add(pers)
+        val repository = Repository("jdbc:postgresql://localhost:5432/db", "marina", "1234")
+        repository.insert(pers)
         jTreeUpdate(heroes)
     }
 
@@ -38,14 +40,22 @@ object Command {
      * load - перечитать коллекцию из файла
      */
     fun load(){
-        heroes = ConcurrentLinkedDeque()
         val repository = Repository("jdbc:postgresql://localhost:5432/db", "marina", "1234")
         heroes = repository.selectAll()
         jTreeUpdate(heroes)
     }
 
     fun remove(pers: Personage?){
-        heroes.removeIf { it == pers }
+        if (pers != null)
+            heroes.removeIf { it.type == pers.type &&
+                    it.name == pers. name &&
+                    it.x == pers.x &&
+                    it.y == pers.y &&
+                    it.force == pers.force &&
+                    it.height == pers.height &&
+                    it.mood == pers.mood
+            }
+        collectionSave()
         jTreeUpdate(heroes)
     }
 

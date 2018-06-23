@@ -258,12 +258,14 @@ class PersonageChange(gui : GUI) : JComponent(){
             val shorties = Shorties(nameTextFiled.text, x, y, h)
             shorties.force = forceSpinner.value as Int
             shorties.mood = moodValue()
+            shorties.setPK()
             return shorties
         }
         if (moonlighterRadioButton.isSelected){
             val moonlighter = Moonlighter(nameTextFiled.text, x, y, h)
             moonlighter.force = forceSpinner.value as Int
             moonlighter.mood = moodValue()
+            moonlighter.setPK()
             return moonlighter
         }
         if (readerRagioButton.isSelected){
@@ -273,6 +275,7 @@ class PersonageChange(gui : GUI) : JComponent(){
             reader.height = h
             reader.force = forceSpinner.value as Int
             reader.mood = moodValue()
+            reader.setPK()
             return reader
         }
         return Personage("NoName", "Noname", 1.0, 1.0, 1, 1, 1, Mood.NORMAL, LocalDateTime.now())

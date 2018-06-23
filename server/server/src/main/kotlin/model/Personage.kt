@@ -16,7 +16,24 @@ open class Personage(
         var height: Int,
         var skillSwear: Int = 0,
         @Enum var mood: Mood,
-        var dateCreate: LocalDateTime) : Comparable<Personage>, Serializable {
+        var dateCreate: LocalDateTime,
+        @PrimaryKey var id : Int = 0) : Comparable<Personage>, Serializable {
+
+
+
+
+    fun setPK() {
+        val repository = orm.Repository("jdbc:postgresql://localhost:5432/db", "marina", "1234")
+        val res = repository.selectAll<Personage>()
+        var max = 0
+        for (r in res){
+            if (max <= r.id)
+                max = r.id
+        }
+        id = max + 1
+    }
+
+
 
     override fun equals(s: Any?): Boolean {
         if (s == null) {

@@ -28,6 +28,8 @@ class PersonageTree(guiPersonageChange: PersonageChange) : JTree(getTreeModel())
     }
 
     init {
+        Command.setJTreeUpdate { refresh() }
+        refresh()
         selectedPersonage = null
         addMouseListener(object : MouseAdapter(){
             override fun mousePressed(e: MouseEvent) {
@@ -64,7 +66,6 @@ class PersonageTree(guiPersonageChange: PersonageChange) : JTree(getTreeModel())
                 }
             }
         })
-        Command.setJTreeUpdate { refresh() }
     }
 
     fun refresh(){
