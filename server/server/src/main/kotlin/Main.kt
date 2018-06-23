@@ -1,8 +1,7 @@
 import authorization.AutorizationGUI
 import manage.Command
-import server.manage.Manage
 import server.Server
-
+import server.manage.Manage
 import java.net.ServerSocket
 import java.util.concurrent.Executors
 

@@ -1,9 +1,7 @@
 package server.gui
 
-import model.Personage
 import java.awt.GridLayout
 import java.awt.Rectangle
-import java.util.concurrent.ConcurrentLinkedDeque
 import javax.swing.JFrame
 import javax.swing.JMenuBar
 

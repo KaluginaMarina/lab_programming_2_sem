@@ -1,8 +1,6 @@
 package model;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class Shorties extends Personage {
 
@@ -24,29 +22,5 @@ public class Shorties extends Personage {
             System.out.println(this.getType() + " не похож на " + this.getName() + ".");
             return false;
         }
-    }
-
-    public interface Cometo{
-        public double coordinate(Personage a, Personage b);
-    }
-    public void come(Personage p){
-
-        Cometo xy = new Cometo(){
-            @Override
-            public double coordinate(Personage who, Personage where){
-                if (who.getX() - where.getX() < 0){
-                    return where.getX() + Math.random()*10;
-                }
-                else if (who.getX() - where.getX() > 0){
-                    return where.getX() - Math.random()*10;
-                }
-                else {
-                    return where.getX();
-                }
-            }
-        };
-        this.setX(xy.coordinate(this, p));
-        this.setY(xy.coordinate(this, p));
-        System.out.println("Какой-то " + this.getType() + " подошел к " + p.getName() + ".");
     }
 }

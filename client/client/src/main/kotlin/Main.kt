@@ -1,8 +1,7 @@
 import client.Client
 import client.gui.ClientGUI
-import model.*
-
-import java.util.Locale
+import model.Personage
+import java.util.*
 import java.util.concurrent.ConcurrentLinkedDeque
 
 

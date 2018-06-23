@@ -48,12 +48,6 @@ public class Mouse implements ActionListener {
     }
 
     public void start() {
-        gui.panel.timerStart = true;
         timer.start();
-    }
-
-    public void stop() {
-        gui.panel.timerStart = false;
-        timer.stop();
     }
 }

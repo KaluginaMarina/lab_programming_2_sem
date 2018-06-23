@@ -1,7 +1,8 @@
 package model
 
-import orm.*
 import orm.Enum
+import orm.PrimaryKey
+import orm.Table
 import java.io.Serializable
 import java.time.LocalDateTime
 

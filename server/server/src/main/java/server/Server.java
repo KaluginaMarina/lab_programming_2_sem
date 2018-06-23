@@ -1,14 +1,10 @@
 package server;
 
 import manage.Command;
-import model.Personage;
-import client.util.CommandType;
 
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class Server implements Runnable{
     private Socket client;
@@ -24,24 +20,20 @@ public class Server implements Runnable{
             System.out.println("**Connection accepted.");
             DataOutputStream out = new DataOutputStream(client.getOutputStream());
             DataInputStream in = new DataInputStream(client.getInputStream());
-            client.util.Command entry = null;
             while(!client.isClosed()){
                 ObjectInputStream ois = new ObjectInputStream(in);
                 Object ob = ois.readObject();
                 try {
-                    client.util.Command tmp = (client.util.Command) ob;
-                    entry = tmp;
+                    String tmp = (String) ob;
                     System.out.println("\n**Получено...");
-                    System.out.println(entry);
+                    System.out.println(tmp);
+                    ObjectOutputStream oos = new ObjectOutputStream(out);
+                    oos.writeObject(Command.INSTANCE.getHeroes());
+                    oos.flush();
+                    out.flush();
                 } catch (ClassCastException e) {
                     System.out.println("Ошибка. Команда не команда");
                 }
-                if(entry != null && entry.commandType == CommandType.QUIT){
-                    out.flush();
-                    break;
-                }
-                Answer answer = new Answer(entry, client);
-                answer.run();
             }
             in.close();
             out.close();

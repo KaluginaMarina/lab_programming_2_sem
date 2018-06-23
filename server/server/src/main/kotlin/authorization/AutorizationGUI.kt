@@ -1,9 +1,11 @@
 package authorization
 
-import manage.Command
 import org.mindrot.jbcrypt.BCrypt
 import server.gui.GUI
-import java.awt.*
+import java.awt.Color
+import java.awt.GridBagConstraints
+import java.awt.GridBagLayout
+import java.awt.Rectangle
 import java.io.File
 import javax.swing.*
 

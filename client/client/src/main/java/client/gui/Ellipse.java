@@ -48,12 +48,10 @@ class Ellipse implements ActionListener {
     }
 
     public void start() {
-        panelCollection.timerStart = true;
         timer.start();
     }
 
     public void stop() {
-        panelCollection.timerStart = false;
         this.widthNow = width;
         timer.stop();
     }

@@ -15,7 +15,6 @@ public class PanelCollection extends JPanel {
     private ArrayList<Personage> heroesFilter;
     private ClientGUI clientGUI;
     private StartButton startButton;
-    boolean timerStart = false;
     private Graphics2D gg;
 
     int ox;
