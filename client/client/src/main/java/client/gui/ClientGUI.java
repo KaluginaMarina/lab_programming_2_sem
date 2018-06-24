@@ -2,12 +2,17 @@ package client.gui;
 
 import client.Client;
 import client.util.ManageCollection;
+import com.github.lgooddatepicker.components.DatePickerSettings;
+import com.github.lgooddatepicker.components.DateTimePicker;
+import com.github.lgooddatepicker.components.TimePicker;
+import com.github.lgooddatepicker.components.TimePickerSettings;
 import control.UTF8Control;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -45,6 +50,14 @@ public class ClientGUI extends JFrame{
     private JButton refresh;
     public Locale locale;
     StartButton startbutton;
+    private JLabel dateLabel;
+    private JLabel fromLabel3;
+    private JLabel toLabel3;
+
+    public DateTimePicker fromDateFilter;
+    public DateTimePicker toDateFilter;
+    private GridBagConstraints filters;
+    private JPanel filter;
 
     public ClientGUI(Client client, int xBounds, int yBounds, int widthBounds, int heightBounds, Locale locale) {
         super();
@@ -128,6 +141,14 @@ public class ClientGUI extends JFrame{
         toLabel2 = new JLabel();
         toLabel2.setForeground(Color.darkGray);
 
+        //date filter
+        dateLabel = new JLabel();
+        fromLabel3 = new JLabel();
+        toLabel3 = new JLabel();
+        dateLabel.setForeground(Color.darkGray);
+        fromLabel3.setForeground(Color.darkGray);
+        toLabel3.setForeground(Color.darkGray);
+
         //buttons
         startButton = new JButton();
         startButton.setBackground(Color.red);
@@ -146,11 +167,23 @@ public class ClientGUI extends JFrame{
         panel.mouse = mouse;
         panel.draw(client.getHeroes());
 
+        refresh = new JButton();
+        refresh.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ClientGUI tmp = new ClientGUI(client, ClientGUI.this.getBounds().x, ClientGUI.this.getBounds().y, ClientGUI.this.getBounds().width, ClientGUI.this.getBounds().height, locale);
+                panel = new PanelCollection(client.getHeroes(), tmp, startbutton);
+                ClientGUI.this.setVisible(false);
+                tmp.setVisible(true);
+                panel.draw(client.getHeroes());
+            }
+        });
+
         //панель с фильтром
-        JPanel filter = new JPanel();
+        filter = new JPanel();
         filter.setLayout(new GridBagLayout());
 
-        GridBagConstraints filters = new GridBagConstraints();
+        filters = new GridBagConstraints();
 
         JMenuBar menuBar = new JMenuBar();
         menuBar.add(new Menu(this));
@@ -275,25 +308,29 @@ public class ClientGUI extends JFrame{
         filters.gridy = 15;
         filter.add(heightToTextField, filters);
 
-        //start button
+        //date
+
         filters.gridx = 1;
         filters.gridy = 17;
+        filter.add(dateLabel, filters);
+
+        filters.gridx = 2;
+        filters.gridy = 17;
+        filter.add(fromLabel3, filters);
+
+        filters.gridx = 2;
+        filters.gridy = 19;
+        filter.add(toLabel3, filters);
+
+
+        //start button
+        filters.gridx = 1;
+        filters.gridy = 22;
         filters.gridwidth = 3;
         filter.add(startButton, filters);
 
-        refresh = new JButton();
-        refresh.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ClientGUI tmp = new ClientGUI(client, ClientGUI.this.getBounds().x, ClientGUI.this.getBounds().y, ClientGUI.this.getBounds().width, ClientGUI.this.getBounds().height, locale);
-                panel = new PanelCollection(client.getHeroes(), tmp, startbutton);
-                ClientGUI.this.setVisible(false);
-                tmp.setVisible(true);
-                panel.draw(client.getHeroes());
-            }
-        });
-        filters.gridx = 3;
-        filters.gridy = 20;
+        filters.gridx = 1;
+        filters.gridy = 25;
         filters.anchor = GridBagConstraints.NORTH;
         refresh.setSize(35, 15);
         filter.add(refresh, filters);
@@ -302,6 +339,8 @@ public class ClientGUI extends JFrame{
         this.add(filter);
 
         changeLanguage(Locale.getDefault());
+
+        //date filter
         this.setVisible(true);
     }
 
@@ -331,6 +370,38 @@ public class ClientGUI extends JFrame{
         toLabel2.setText(rb.getString("to"));
         startButton.setText(rb.getString("start"));
         refresh.setText(rb.getString("reset"));
+        dateLabel.setText(rb.getString("date"));
+        fromLabel3.setText(rb.getString("from"));
+        toLabel3.setText(rb.getString("to"));
+
+        LocalDateTime from = null;
+        LocalDateTime to = null;
+        if (fromDateFilter != null) {
+            from = fromDateFilter.getDateTimeStrict();
+            to = toDateFilter.getDateTimeStrict();
+            filter.remove(fromDateFilter);
+            filter.remove(toDateFilter);
+
+        }
+        DatePickerSettings dateSettings = new DatePickerSettings(locale);
+        TimePickerSettings timeSettings = new TimePickerSettings(locale);
+        fromDateFilter = new DateTimePicker(dateSettings, timeSettings);
+        fromDateFilter.setDateTimePermissive(from);
+        DatePickerSettings dateSettings1 = new DatePickerSettings(locale);
+        TimePickerSettings timeSettings1 = new TimePickerSettings(locale);
+        toDateFilter = new DateTimePicker(dateSettings1, timeSettings1);
+        toDateFilter.setDateTimePermissive(to);
+
+        filters.gridwidth = 1;
+
+        filters.gridx = 3;
+        filters.gridy = 17;
+        filter.add(fromDateFilter, filters);
+
+        filters.gridx = 3;
+        filters.gridy = 19;
+        filter.add(toDateFilter, filters);
+        
         startbutton.changeLanguage(locale);
     }
 }

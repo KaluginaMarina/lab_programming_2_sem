@@ -24,7 +24,7 @@ class Repository(url : String, username : String, password : String){
                 when (it.type.javaType.typeName){
                     "java.lang.String" -> res.getString(it.name)
                     "java.time.LocalDateTime" -> {
-                        LocalDateTime.parse(res.getString(it.name), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"))
+                        res.getTimestamp(it.name).toLocalDateTime()
                     }
                     "int" -> res.getInt(it.name)
                     else -> res.getObject(it.name)

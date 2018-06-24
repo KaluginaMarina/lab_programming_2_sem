@@ -19,7 +19,7 @@ public class Menu extends JMenu {
         ru_Ru.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gui.changeLanguage(new Locale("ru_Ru"));
+                gui.changeLanguage(new Locale("ru", "RU"));
             }
         });
         this.add(ru_Ru);
@@ -28,7 +28,7 @@ public class Menu extends JMenu {
         no_NO.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gui.changeLanguage(new Locale("no_NO"));
+                gui.changeLanguage(new Locale("no", "NO"));
             }
         });
         this.add(no_NO);
@@ -37,7 +37,7 @@ public class Menu extends JMenu {
         fr_CA.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gui.changeLanguage(new Locale("fr_CA"));
+                gui.changeLanguage(new Locale("fr", "CA"));
             }
         });
         this.add(fr_CA);
@@ -46,7 +46,7 @@ public class Menu extends JMenu {
         es_PR.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gui.changeLanguage(new Locale("es_PR"));
+                gui.changeLanguage(new Locale("es", "PR"));
             }
         });
         this.add(es_PR);
