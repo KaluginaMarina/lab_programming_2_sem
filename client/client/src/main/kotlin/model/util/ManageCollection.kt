@@ -1,6 +1,7 @@
 package client.util
 
 import model.Personage
+import java.time.LocalDateTime
 
 import java.util.concurrent.ConcurrentLinkedDeque
 
@@ -105,6 +106,22 @@ class ManageCollection() {
         while (!c.isEmpty()) {
             val tmp = c.removeFirst().height.toDouble()
             if (tmp < res) {
+                res = tmp
+            }
+        }
+        return res
+    }
+
+    fun minDate(heroes: ConcurrentLinkedDeque<Personage>) : LocalDateTime{
+        val c = ConcurrentLinkedDeque<Personage>()
+        c.addAll(heroes)
+        if (c.isEmpty()){
+            return LocalDateTime.MIN
+        }
+        var res = LocalDateTime.MAX
+        while (!c.isEmpty()){
+            val tmp = c.removeFirst().dateCreate
+            if (res.compareTo(tmp) > 0){
                 res = tmp
             }
         }

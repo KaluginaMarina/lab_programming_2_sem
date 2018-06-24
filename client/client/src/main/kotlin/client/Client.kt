@@ -3,13 +3,12 @@ package client
 import client.gui.ClientGUI
 import client.util.FrameErrorConnection
 import model.Personage
-
 import java.io.*
 import java.net.ConnectException
 import java.net.Socket
 import java.net.SocketException
 import java.rmi.UnknownHostException
-import java.util.NoSuchElementException
+import java.util.*
 import java.util.concurrent.ConcurrentLinkedDeque
 
 class Client(heroes: ConcurrentLinkedDeque<Personage>) : Runnable {

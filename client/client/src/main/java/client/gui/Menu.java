@@ -51,4 +51,9 @@ public class Menu extends JMenu {
         });
         this.add(es_PR);
     }
+
+    public void changeLanguage(Locale locale){
+        ResourceBundle rb = ResourceBundle.getBundle("Resources", locale, new UTF8Control());
+        this.setText(rb.getString("language"));
+    }
 }

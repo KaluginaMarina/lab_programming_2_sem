@@ -2,8 +2,6 @@ package orm
 
 import java.lang.IllegalArgumentException
 import java.sql.DriverManager
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.concurrent.ConcurrentLinkedDeque
 import kotlin.reflect.KProperty
 import kotlin.reflect.full.declaredMemberProperties

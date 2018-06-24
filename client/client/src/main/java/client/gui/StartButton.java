@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentLinkedDeque;
@@ -123,6 +124,17 @@ public class StartButton implements ActionListener{
                 gui.heightToTextField.setBackground(new Color(255, 76, 76));
                 error = true;
             }
+            if (gui.fromDateFilter.getDateTimeStrict() != null || gui.toDateFilter.getDateTimeStrict() != null){
+                if (gui.fromDateFilter.getDateTimeStrict() == null) gui.fromDateFilter.setDateTimePermissive(LocalDateTime.MIN);
+                if (gui.toDateFilter.getDateTimeStrict() == null) gui.toDateFilter.setDateTimePermissive(LocalDateTime.MAX);
+                if(gui.fromDateFilter.getDateTimeStrict().compareTo(gui.toDateFilter.getDateTimePermissive()) > 0){
+                    ErrorFrame dateErrorFrame = new ErrorFrame(rb.getString("dateFrom>dateTo"));
+                    dateErrorFrame.setVisible(true);
+                    gui.fromDateFilter.setBackground(new Color(255, 76, 76));
+                    gui.toDateFilter.setBackground(new Color(255, 76, 76));
+                }
+            }
+
         }
         //обработка нажатия кнопки
         if(!error){
@@ -170,6 +182,14 @@ public class StartButton implements ActionListener{
                         .filter(x -> x.getName().toUpperCase().charAt(0) >= gui.nameFromSpinner.getValue().toString().charAt(0) &&
                                      x.getName().toUpperCase().charAt(0) <= gui.nameToSpinner.getValue().toString().charAt(0))
                         .collect(Collectors.toCollection(ConcurrentLinkedDeque::new));
+
+                //Фильтр по date
+                heroesFilter = heroesFilter.stream()
+                        .filter(x -> x.getDateCreate().compareTo(gui.fromDateFilter.getDateTimePermissive()) >= 0 &&
+                                     x.getDateCreate().compareTo(gui.toDateFilter.getDateTimePermissive()) <= 0)
+                        .collect(Collectors.toCollection(ConcurrentLinkedDeque::new));
+
+
                 //gui.panel.redraw();
                 for (int i = 0; i < gui.panel.ellipses.size(); ++i){
                     gui.panel.ellipses.get(i).start();
@@ -188,8 +208,6 @@ public class StartButton implements ActionListener{
             }
         }
     }
-
-
 
     public void changeLanguage(Locale locale){
         this.locale = locale;

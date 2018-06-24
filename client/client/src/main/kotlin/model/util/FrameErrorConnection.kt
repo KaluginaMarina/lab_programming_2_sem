@@ -2,14 +2,16 @@ package client.util
 
 import client.Client
 import control.UTF8Control
-
-import javax.swing.*
-import java.awt.*
+import java.awt.Color
+import java.awt.GridBagConstraints
+import java.awt.GridBagLayout
 import java.awt.event.ActionEvent
-import java.util.Locale
-import java.util.ResourceBundle
-
 import java.lang.System.exit
+import java.util.*
+import javax.swing.AbstractAction
+import javax.swing.JButton
+import javax.swing.JFrame
+import javax.swing.JLabel
 
 /**
  * Окно для обработки ошибки соединения

@@ -4,7 +4,6 @@ import client.Client;
 import client.util.ManageCollection;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 import com.github.lgooddatepicker.components.DateTimePicker;
-import com.github.lgooddatepicker.components.TimePicker;
 import com.github.lgooddatepicker.components.TimePickerSettings;
 import control.UTF8Control;
 
@@ -58,6 +57,7 @@ public class ClientGUI extends JFrame{
     public DateTimePicker toDateFilter;
     private GridBagConstraints filters;
     private JPanel filter;
+    private Menu menu;
 
     public ClientGUI(Client client, int xBounds, int yBounds, int widthBounds, int heightBounds, Locale locale) {
         super();
@@ -186,7 +186,8 @@ public class ClientGUI extends JFrame{
         filters = new GridBagConstraints();
 
         JMenuBar menuBar = new JMenuBar();
-        menuBar.add(new Menu(this));
+        menu = new Menu(this);
+        menuBar.add(menu);
         this.setJMenuBar(menuBar);
 
         //Код, для расположения всего этого
@@ -374,14 +375,14 @@ public class ClientGUI extends JFrame{
         fromLabel3.setText(rb.getString("from"));
         toLabel3.setText(rb.getString("to"));
 
-        LocalDateTime from = null;
-        LocalDateTime to = null;
+        ManageCollection m = new ManageCollection();
+        LocalDateTime from = m.minDate(client.getHeroes());
+        LocalDateTime to = LocalDateTime.now();
         if (fromDateFilter != null) {
             from = fromDateFilter.getDateTimeStrict();
             to = toDateFilter.getDateTimeStrict();
             filter.remove(fromDateFilter);
             filter.remove(toDateFilter);
-
         }
         DatePickerSettings dateSettings = new DatePickerSettings(locale);
         TimePickerSettings timeSettings = new TimePickerSettings(locale);
@@ -401,7 +402,8 @@ public class ClientGUI extends JFrame{
         filters.gridx = 3;
         filters.gridy = 19;
         filter.add(toDateFilter, filters);
-        
+
+        menu.changeLanguage(locale);
         startbutton.changeLanguage(locale);
     }
 }
